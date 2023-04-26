@@ -8,6 +8,8 @@ import { useState,useReducer } from 'react'
 import Calendar from 'react-calendar'
 import '../styles/Home.module.css'
 import {DateRangeInput, DateSingleInput, Datepicker} from '@datepicker-react/styled'
+
+
 const initialState = {
   startDate: null,
   endDate: null,
@@ -31,7 +33,7 @@ const Search = () => {
     const [value, setValue] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
     // const [drop, setdrop] =useState("");
-    console.log(pick)
+    // console.log(pick)
     return (
         <Wrapper>
 

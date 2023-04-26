@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
+import tw from 'tailwind-styled-components'
 const paperStyle = { padding: '30px 20px', width:"30vw", margin: "20px auto" }
 const avatarStyle = { backgroundColor: 'green' }
 function SignUp() {
@@ -16,16 +17,18 @@ function SignUp() {
         setValue(event.target.value);
     };
     const margintop = {
-        marginTop: "15px "
+        marginTop: "15px ",
+        backgroundColor: "black"
     }
     const marginbottom ={
         marginBottom:"15px"
     }
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
+        <Wrapper>
         <Grid>
             <Paper elevation={20} style={paperStyle}>
-                <Grid align='center'>
+                <Grid align='center' style={margintop}>
                     <Avatar style={avatarStyle}><AddCircleOutlineIcon /></Avatar>
                     <h2>Sign Up</h2>
                     <Typography style={marginbottom} variant='caption' gutterBottom>Please fill this form to make an account</Typography>
@@ -51,12 +54,17 @@ function SignUp() {
                     <TextField style={marginbottom} id="filled-basic" type='password' label='Confirm Password' variant="filled" color="success" fullWidth required />
                   
                     <Checkbox {...label} defaultChecked color="success" />I accept all the terms and condition <br/>
-                    <Button style={margintop} type='submit' variant='contained' color='success' fullWidth>Sign Up</Button>
+                    <Button style={margintop} type='submit' variant='contained'  fullWidth>Sign Up</Button>
 
                 </form>
             </Paper>
         </Grid>
+        </Wrapper>
     )
 }
 
 export default SignUp
+
+const Wrapper = tw.div`
+mt-10 h-screen ml-10
+`

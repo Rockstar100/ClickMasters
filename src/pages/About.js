@@ -1,6 +1,6 @@
 import { Grid, Typography,TextField ,Box  } from '@mui/material';
 import React from 'react';
-import CollageImage from './collage.png'
+
 
 const About = () => {
     const AboutContent = { marginTop: '-25%' }
@@ -62,7 +62,7 @@ const About = () => {
                     </span>
 
             </div>
-            <div  style={{ width:'80%',margin:'auto', marginTop:'5%'  }}> <img src={CollageImage}/></div>
+            <div  style={{ width:'80%',margin:'auto', marginTop:'5%'  }}> <img src=""/></div>
 
             <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>

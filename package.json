@@ -19,12 +19,12 @@
     "chart.js": "^4.2.1",
     "firebase": "^9.20.0",
     "mapbox-gl": "^2.14.1",
+    "mdb-react-ui-kit": "^6.0.0",
     "next": "13.3.0",
     "nodemailer": "^6.9.1",
     "react": "18.2.0",
     "react-azure-maps": "^0.4.5",
     "react-calendar": "^4.2.1",
-    "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
@@ -32,7 +32,8 @@
     "react-icons": "^4.8.0",
     "react-mapbox-autocomplete": "^0.2.3",
     "react-native-webview": "^12.0.2",
-    "react-rating": "^2.0.5"
+    "react-rating": "^2.0.5",
+    "react-router-dom": "^6.10.0"
   },
   "devDependencies": {
     "@types/node": "18.15.11",

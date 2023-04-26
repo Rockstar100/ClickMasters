@@ -1,8 +1,7 @@
-import * as React from 'react';
+import React from 'react'
 import tw from 'tailwind-styled-components'
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { Avatar, Grid } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
@@ -22,10 +21,6 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Button from '@mui/material/Button';
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect,useState } from 'react'
-import { auth, provider } from "./firebase"
-import { onAuthStateChanged,signOut } from 'firebase/auth';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -66,7 +61,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-  backgroundColor: 'black',
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
@@ -75,73 +69,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const marginbottom = {
-    marginBottom: '20px'
-}
-
-  const handleDrawerClose = () => {
+export default function Drawers() {
+    const theme = useTheme();
+      const [open, setOpen] = React.useState(false);
+      const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [user, setUser] = useState(null)
-const router = useRouter()
-useEffect(() => {
-   return onAuthStateChanged(auth, user => {
-        if (user) {
-            setUser({
-                name: user.displayName,
-                photoUrl: user.photoURL,
-            }
-            )
-        } else {
-            setUser(null)
-        }
-    })
-}, [])
-
-const signOutHandler = () => {
-    signOut(auth)
-        .then(() => {
-            setUser(null)
-            router.push('/Login')
-        })
-        .catch((error) => {
-            console.log(error.message)
-        })
-}
-
-
   return (
-    <Box sx={{ display: 'flex' ,margin : "-3%"  }} disable >
-      <CssBaseline />
-      <AppBar position="fixed" open={open} style={{backgroundColor:"black"}}>
-        <Toolbar>
-          <IconButton 
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-          Click Masters
-          </Typography>
-          <div style={{ marginLeft: 'auto' }}>
-                               <Button onClick={()=>signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1 }} variant="outlined">Sign Out</Button>
-                             {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
-                             */}
-                        </div>
-        </Toolbar>
-      </AppBar>
-      <Drawer
+<Wrapper>
+     <Drawers/>
+    <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -155,13 +92,33 @@ const signOutHandler = () => {
         open={open}
       >
         <DrawerHeader>
+                  <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+          Click Masters
+          </Typography>
+          <div style={{ marginLeft: 'auto' }}>
+                               <Button  sx={{ borderColor: 'white', color: 'white', mr: 1 }} variant="outlined">Sign in</Button>
+                             {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
+                             */}
+                        </div>
+        </Toolbar>
+      </AppBar>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}></Avatar> <br /> <Typography>Hello {user && user.name} </Typography></Grid>
           <Link href="/Login">
             <ListItem  disablePadding>
               <ListItemButton>
@@ -216,46 +173,20 @@ const signOutHandler = () => {
         </List>
         <Divider />
         <List>
-        <Link href="/notification">
-            <ListItem disablePadding>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <MailIcon />
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
-                <ListItemText primary="All Orders" />
+                <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/notification">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Completed" />
-              </ListItemButton>
-            </ListItem>
-            </Link>
-            <Link href="/notification">
-            <ListItem disablePadding>
-              <ListItemButton>
-            
-          <ListItemIcon>
-                  <MailIcon />
-                </ListItemIcon>
-                <ListItemText primary="Pending" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-               
-        
+          ))}
         </List>
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-
-       
-      </Main>
-    </Box>
-  );
+      </Wrapper>
+  )
 }
+
+const Wrapper = tw.div``
