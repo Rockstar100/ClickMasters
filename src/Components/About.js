@@ -1,12 +1,14 @@
-import { Grid, Typography,TextField ,Box  } from '@mui/material';
 import React from 'react';
-import CollageImage from './collage.png'
 
+import Sidenav from './Sidenav'
+import { Grid, Typography,TextField ,Box  } from '@mui/material';
 const About = () => {
     const AboutContent = { marginTop: '-25%' }
+
+      
     return (
         <>
-
+           
             <div >
                 <img
                     src="https://cdn.olaelectric.com/ev-discovery-platform/wysiwyg/Banner_Image_About_Page_49d62e8de3.webp"
@@ -62,19 +64,9 @@ const About = () => {
                     </span>
 
             </div>
-            <div  style={{ width:'80%',margin:'auto', marginTop:'5%'  }}> <img src={CollageImage}/></div>
+            <div  style={{ width:'80%',margin:'auto', marginTop:'5%'  }}> <img src=""/></div>
 
-            <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={6} md={8}>
-         xs=6 md=8
-        </Grid>
-        <Grid item xs={6} md={4}>
-         xs=6 md=4
-        </Grid>
-        </Grid>
-        </Box>
-
+          
 
 
 

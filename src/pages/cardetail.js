@@ -1,33 +1,39 @@
 export const cardetail =[
    
     {
-        image: "https://links.papareact.com/3pn",
-        title: "UberX",
+        id: "Usercard",
+        image: "https://www.freepnglogos.com/uploads/wedding/bride-and-groom-wedding-png-transparent-image-10.png",
+        title: "Marrige Fuction",
         multiplier: 1,
         
 
     },
     {
-        image: "https://links.papareact.com/5w8",
-        title: "UberXL",
+        id: "Usercard",
+        image: "https://w7.pngwing.com/pngs/830/386/png-transparent-black-business-people-silhouettes-creative-business-black-successful-people-thumbnail.png",
+        title: "Corporate function",
         multiplier: 1.2
+
         
     },
     {
-        image: "https://links.papareact.com/7pf",
-        title: "UberLUX",
+        id: "Usercard",
+        image: "https://w7.pngwing.com/pngs/663/877/png-transparent-product-design-digital-marketing-business-steemit-brand-icon-rectangle-black-business.png",
+        title: "Product based",
         multiplier: 1.75
         
     },
     {
-        image: "https://links.papareact.com/3pn",
-        title: "Comfort",
+        id: "Usercard",
+        image: "https://w7.pngwing.com/pngs/421/249/png-transparent-computer-icons-cultural-icon-culture-symbol-miscellaneous-culture-text.png",
+        title: "Cutural Event",
         multiplier: 1.3
         
     },
     {
-        image: "https://links.papareact.com/5w8",
-        title: "Black SUV", 
+        id: "Usercard",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Self_magazine_logo.svg/1200px-Self_magazine_logo.svg.png",
+        title: "For Self", 
         multiplier: 2.8
         
     }

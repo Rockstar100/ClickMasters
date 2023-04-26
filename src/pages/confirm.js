@@ -4,6 +4,7 @@ import { useEffect,useState } from 'react'
 import Map from'../components/Map'
 import { useRouter } from 'next/router'
 import Rider from './Rider'
+import Link from 'next/link'
 const Confirm = () => {
     const router = useRouter()
 
@@ -56,7 +57,11 @@ const Confirm = () => {
 
     return(
         <Wrapper>
-       
+           <ButtonContainer>
+            <Link href="/">
+                <BacKButton src="https://img.icon8.com/ios-filled/50/000000/left.png"/>
+            </Link>
+            </ButtonContainer> 
         <Map
             pickup={pickup}
            
@@ -67,11 +72,11 @@ const Confirm = () => {
                
 
                 
-                <ConfirmButtonContainer>
+                {/* <ConfirmButtonContainer>  
                     <ConfirmButton>
                         Confirm Ride
                     </ConfirmButton>
-                </ConfirmButtonContainer>
+                </ConfirmButtonContainer> */}
             </RideContainer>
         </Wrapper>
     )
@@ -92,4 +97,11 @@ bg-black text-white text-center my-4 mx-4 py-4 rounded-lg text-xl
 const ConfirmButtonContainer = tw.div`
 border-t-2
 `
+const ButtonContainer = tw.div`
+roudned-full  absolute top-4 left-4 z-10 bg-white shadow-md cursor-pointer
+`
+const BacKButton = tw.img`
+h-full object-contain
+`
+
 

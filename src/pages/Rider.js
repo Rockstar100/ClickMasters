@@ -2,36 +2,61 @@ import React from 'react'
 import tw from 'tailwind-styled-components'
 import {cardetail} from './cardetail'
 import { useEffect,useState } from 'react'
+import { Typography } from '@mui/material'
+import { on } from 'events'
+import { useRef } from 'react';
+
+import { useRouter } from 'next/router';
 
 const Rider = () => {
-
+    const router = useRouter();
     const [car,setCar] = useState([]);
     
     useEffect(() => {
         setCar(cardetail)
     },[])
+    const [selectedCar,setSelectedCar] = useState(null);
+    
+    const handleCarSelection = (id)=> {
+
+        setSelectedCar(id)
+        router.push(`/${id}`);
+
+    }
+    
+
+
+
+
+    
+   
     return (
         <Wrapper>
-            <Title>Choose a ride</Title>
+            <Title>select your Event</Title>
             <CarList>
             {cardetail.map((cardetail)=>
-            <Car>
+            <Car key={cardetail.id
+            } onClick={() => handleCarSelection(cardetail.id)}
+             
+             >
+               
             <CarImg src={cardetail.image} />
             <CarDetails>
                 <Service>
                     {cardetail.title}
                 </Service>
-                <Time>
-                    8:03PM 
-                </Time>
-            </CarDetails>
-            <Price>
+                <Price>
                 $52.00
             </Price>
+            </CarDetails>
+
+           
         </Car>
+
             
             )
             }
+            
                 {/* {cardetail.map(car, index => (
 
                     <Car key={ index }>
@@ -65,11 +90,11 @@ text-gray-500 text-center text-xs py-2 border-b
 const CarList = tw.div`
 overflow-y-scroll
 `
-const Car = tw.div`
-flex p-4 items-center justify-between border-b cursor-pointer hover:bg-gray-200 
+const Car = tw.button`
+flex p-4 items-center justify-between border-b cursor-pointer hover:bg-gray-200 focus:outline-none focus:bg-gray-200 w-full text-left
 `
 const CarImg = tw.img`
-h-14 mr-4
+h-10 mr-4
 `
 const CarDetails = tw.div`
 flex-1 
@@ -79,7 +104,4 @@ text-sm
 `
 const Service = tw.div`
 font-medium
-`
-const Time = tw.div`
-text-xs text-blue-500
 `
