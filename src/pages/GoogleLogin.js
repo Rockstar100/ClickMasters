@@ -1,3 +1,4 @@
+
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mui/material'
 import React, { useEffect } from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -21,7 +22,7 @@ function Login() {
         })
     }, [])
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    const paperStyle = { padding: 20, height: '60vh', width: 280 }
+    const paperStyle = { padding: 20, width: 280 }
     const avatarStyle = { backgroundColor: green }
     const linkUnStyle = {
         textDecoration: 'none'
@@ -39,20 +40,21 @@ function Login() {
           <p className="mb-11">"We assure you to provide Best Photographers Near you at Best Prize"</p>
                 <Paper elevation={10} style={paperStyle}>
                     <Grid align="center">
-                        <Avatar style={avatarStyle} alt="Remy Sharp" src="https://scontent.fixc2-1.fna.fbcdn.net/v/t39.30808-1/311598113_103597312558147_5160948487245846848_n.jpg?stp=c0.6.160.160a_dst-jpg_p160x160&_nc_cat=102&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=BUJlWlqjvOIAX9mxs5N&_nc_ht=scontent.fixc2-1.fna&oh=00_AfBtBEHNDGjWO7AJaiJVezlVN6Dw1oQm7Q4D5VwMd9sl4g&oe=644B7B65" ><LockOutlinedIcon /></Avatar>
-                        <h2> Sign In</h2>
-                        <TextField id="filled-basic" label="Enter Username" variant="filled" color="success" fullWidth />
+                        <Avatar style={avatarStyle} sx={{ width: 80, height: 80 }} alt="Remy Sharp" src="https://th.bing.com/th/id/R.0fa3fe04edf6c0202970f2088edea9e7?rik=joOK76LOMJlBPw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fgoogle-logo-png-open-2000.png&ehk=0PJJlqaIxYmJ9eOIp9mYVPA4KwkGo5Zob552JPltDMw%3d&risl=&pid=ImgRaw&r=0" ></Avatar>
+                        {/* <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fgoogle-icon&psig=AOvVaw3DxfnGFV01i3GVkgUPPA5H&ust=1682663577938000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLism7q4yf4CFQAAAAAdAAAAABAE" alt="" /> */}
+                        <Sign> Sign In With Google</Sign>
+                        {/* <TextField id="filled-basic" label="Enter Username" variant="filled" color="success" fullWidth />
                         <TextField id="filled-basic" label="Password" type='password' variant="filled" color="success"  fullWidth  />
-                       
+                        */}
                     </Grid>
-                    <Checkbox {...label} defaultChecked color="success" />Remember Me
+                    {/* <Checkbox {...label} defaultChecked color="success" />Remember Me */}
                     <br /><Button style={btnstyle} type="submit" onClick={()=> signInWithPopup(auth,provider)} variant="contained"  color="success" fullWidth>Sign In</Button>
-                <Typography>
+                {/* <Typography>
                     <Link style={linkUnStyle} href='#'>Forgot Password</Link>
                 </Typography>
                 <Typography> Already have an account
                     <Link style={ linkUnStyle} href='#'>Sign Up</Link>
-                </Typography>
+                </Typography> */}
                 </Paper>
             </Grid>
         </Wrapper>
@@ -64,5 +66,6 @@ export default Login
 const Wrapper = tw.div`
 mt-10 h-screen ml-10 mt-10
 `
-
-
+const Sign = tw.h1`
+text-xl mt-4 mb-4 text-black align-center justify-center
+`

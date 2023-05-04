@@ -1,11 +1,12 @@
 import { Grid, Typography,TextField ,Box  } from '@mui/material';
 import React from 'react';
-
+import Sidenav from './Sidenav'
 
 const About = () => {
     const AboutContent = { marginTop: '-25%' }
     return (
         <>
+         <Sidenav/>
 
             <div >
                 <img

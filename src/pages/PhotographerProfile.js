@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react'
 import tw from "tailwind-styled-components"
 import { Typography, Grid } from '@mui/material'
@@ -12,93 +13,104 @@ import { useEffect, useState } from 'react'
 import { auth, provider } from "./firebase"
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { PhotographerDetail } from '../Data/PhotographerDetail';
+import swal from 'sweetalert';
 import Sidenav from './Sidenav'
 
+function PhotographerProfile() {
 
-function MyProfile() {
+    const Click = (e) => {
+        e.preventDefault();
+        swal({
+          title: "Are you sure?",
+          text: "You want to hire this photographer!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Notification was Sent to photographer.Be in touch for Further Details ", {
+              icon: "success",
+            });
+          } else {
+            swal("You have cancelled the hiring process!");
+          }
+        });
+      }
 
 
-
+    console.log(PhotographerDetail)
     const router = useRouter()
     const { details } = router.query
-    // const [data, setData] = useState({})
-    // const [name, setName] = useState("")
-    // const [email, setEmail] = useState("")
-    // const [adress, setAdress] = useState("")
-    // const [phone, setPhone] = useState("")
-    // const [photoUrl, setPhotoUrl] = useState("")
-    // const [rating, setRating] = useState("")
+  
+    const [photographer, setPhotographer] = React.useState([]);
+  
 
-    // console.log(data)
+    const { id } = router.query
+   
 
-    // const { id } = router.query
+    useEffect(() => {
 
-    // useMemo(() => {
+        {
+            PhotographerDetail.map((PhotographerDetail) => {
+                
+                
+                if (PhotographerDetail.id == id) {
+                    
+                    setPhotographer(PhotographerDetail)
+                  
 
-    //     {
-    //         PhotographerDetail.map((item) => {
-    //             if (item.id === id) {
-    //                 console.log(item)
-    //                 setData(item)
-    //                 setName(item.name)
-    //                 setEmail(item.email)
-    //                 setAdress(item.adress)
-    //                 setPhone(item.phone)
-    //                 setPhotoUrl(item.photoUrl)
-    //                 setRating(item.rating)
+                }
+            })
+        }
 
-    //                 // PhotographerName: item.name,
-    //                 // PhotographerEmail: item.email,
-    //                 // PhotographerAdress: item.adress,
-    //                 // PhotographerPhone: item.phone,
-    //                 // PhotographerPhotoUrl: item.photoUrl,
-    //                 // PhotographerRating: item.rating,
+    }, [id])
+    console.log(photographer.name)
 
-    //             }
-    //         })
-    //     }
-
-    // }, [id])
+    // console.log(name)
 
     const StyleChart = { width: '100%' }
     const GridStyle = { width: '70%' }
     const [user, setUser] = useState(null)
-    useEffect(() => {
-       return onAuthStateChanged(auth, user => {
-            if (user) {
-                setUser({
-                    name: user.displayName,
-                    email: user.email,
-                    adress: user.adress,
-                    phone: user.phone,
-                    photoUrl: user.photoURL,
+    // useEffect(() => {
+    //    return onAuthStateChanged(auth, user => {
+    //         if (user) {
+    //             setUser({
+    //                 name: user.displayName,
+    //                 email: user.email,
+    //                 adress: user.adress,
+    //                 phone: user.phone,
+    //                 photoUrl: user.photoURL,
 
-                }
-                )
-            } else {
-                setUser(null)
-            }
-        })
-    }, [])
+    //             }
+    //             )
+    //         } else {
+    //             setUser(null)
+    //         }
+    //     })
+    // }, [])
 
     return (
         <Wrapper>
-<Sidenav/>
+            <Sidenav />
+
             <div className="flex font-sans">
                 <div className="flex-none w-48 relative">
-                    <img src={user && user.photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <img src={photographer.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                 </div>
                 <form className="flex-auto p-6">
                     <div className="flex flex-wrap">
                         <h1 className="flex-auto text-4xl font-semibold text-slate-900">
-                            {user && user.name}
+                            {photographer.name}
                         </h1>
-                       
+                        <div className="text-lg font-semibold text-slate-500">
+                            <CurrencyRupeeIcon /> {photographer.price}/h
+                        </div>
                         <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2 mb-6">
-                            User
+                            Proffesional Photographer
                         </div>
                     </div>
-                    <Typography > Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex rem a iste. Sed soluta modi sunt necessitatibus accusamus eius delectus amet aspernatur. Nisi possimus cumque praesentium atque ipsam, sint assumenda.\</Typography>
+                    <Typography >{photographer.description }</Typography>
 
                     <div className="flex mt-9">
                         <StarIcon /><StarIcon /><StarIcon /><StarHalfIcon /><StarOutlineIcon />
@@ -106,11 +118,12 @@ function MyProfile() {
 
                     <div className="flex space-x-4 mt-10 mb-6 text-sm font-medium">
                         <div className="flex-auto flex space-x-4">
-                            <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
-                                Edit Profile
-                            </button>
+                           
+                            <Buttons onClick={Click} className="h-10 px-6 font-semibold rounded-md bg-black text-white" type="submit">
+                                Hire
+                            </Buttons>
                             <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900" type="button">
-                                Switch as a Photographer
+                                Message
                             </button>
                         </div>
 
@@ -136,15 +149,16 @@ function MyProfile() {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                             <div>
                                 <h3 class="text-md font-bold mb-2">Email</h3>
-                                <p class="text-gray-700">{user && user.email}</p>
+                                <p class="text-gray-700">{photographer.email}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Phone</h3>
-                                <p class="text-gray-700">{user && user.phone}</p>
+                                <p class="text-gray-700">{photographer.phone}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Address</h3>
-                                <p class="text-gray-700">{user && user.adress}</p>
+                                <p class="text-gray-700">{photographer.address
+}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Other Information</h3>
@@ -153,7 +167,7 @@ function MyProfile() {
                         </div>
                     </div>
                     <div style={StyleChart}>
-                        
+                        <ChartHorizontal />
                     </div></Grid>
             </Grid >
         </Wrapper>
@@ -177,5 +191,8 @@ const Wrapper = tw.div`
 
     ml-5
     `
+const Buttons = tw.button`
+h-10 px-6 font-semibold rounded-md bg-black text-white`
 
-export default MyProfile
+export default PhotographerProfile
+

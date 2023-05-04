@@ -72,13 +72,13 @@ const Search = () => {
             onChange={(e)=>setdrop(e.target.value)}
             /> */}
                 </InputBoxes>
-                <PlusIcon src="https://img.icons8.com/ios/50/000000/plus-math.png" />
+                {/* <PlusIcon src="https://img.icons8.com/ios/50/000000/plus-math.png" /> */}
 
             </InputContainer>
-            <SavedPlaces>
+            {/* <SavedPlaces>
                 <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png" />
                 Saved Places
-            </SavedPlaces>
+            </SavedPlaces> */}
             <Link href={{
                 pathname: "/confirm",
                 query: {

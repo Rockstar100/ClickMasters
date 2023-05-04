@@ -1,6 +1,7 @@
 import * as React from 'react';
 import tw from 'tailwind-styled-components'
 import { styled, useTheme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { Avatar, Grid } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
@@ -10,8 +11,10 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import TimerIcon from '@mui/icons-material/Timer';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import InfoIcon from '@mui/icons-material/Info';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
@@ -20,11 +23,21 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import GavelIcon from '@mui/icons-material/Gavel';
+import SecurityIcon from '@mui/icons-material/Security';
 import Button from '@mui/material/Button';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect,useState } from 'react'
 import { auth, provider } from "./firebase"
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { onAuthStateChanged,signOut } from 'firebase/auth';
 const drawerWidth = 240;
 
@@ -66,7 +79,8 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-  backgroundColor: 'black',
+  // backgroundColor: 'black',
+  // marginTop: ' -50px',
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
@@ -78,6 +92,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,13 +128,46 @@ const signOutHandler = () => {
     signOut(auth)
         .then(() => {
             setUser(null)
-            router.push('/Login')
+            router.push('/GoogleLogin')
         })
         .catch((error) => {
             console.log(error.message)
         })
 }
+const menuId = 'primary-search-account-menu';
 
+const renderMobileMenu = (
+  <Menu
+    anchorEl={mobileMoreAnchorEl}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+  
+    keepMounted
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+   
+  
+  >
+   
+    <MenuItem>
+      <IconButton
+        size="large"
+        aria-label="show 17 new notifications"
+        color="inherit"
+      >
+        <Badge badgeContent={17} color="error">
+          <NotificationsIcon />
+        </Badge>
+      </IconButton>
+      <p>Notifications</p>
+    </MenuItem>
+    
+  </Menu>
+);
 
   return (
     <Box sx={{ display: 'flex' ,margin : "-3%"  }} disable >
@@ -134,12 +186,24 @@ const signOutHandler = () => {
           <Typography variant="h6" noWrap component="div">
           Click Masters
           </Typography>
+          
           <div style={{ marginLeft: 'auto' }}>
-                               <Button onClick={()=>signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1 }} variant="outlined">Sign Out</Button>
+            <Link href="/notification">
+          <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={1 } color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton></Link>
+                               <Button onClick={()=>signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1, mx: 2}} variant="outlined">Sign Out</Button>
                              {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
                              */}
                         </div>
         </Toolbar>
+        
       </AppBar>
       <Drawer
         sx={{
@@ -162,11 +226,11 @@ const signOutHandler = () => {
         <Divider />
         <List>
         <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}></Avatar> <br /> <Typography>Hello {user && user.name} </Typography></Grid>
-          <Link href="/Login">
+          <Link href="/">
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <InboxIcon /> 
+                < HomeIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItemButton>
@@ -177,7 +241,7 @@ const signOutHandler = () => {
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <InboxIcon /> 
+                <PersonIcon/>
                 </ListItemIcon>
                 <ListItemText primary="My Profile" />
               </ListItemButton>
@@ -187,7 +251,7 @@ const signOutHandler = () => {
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <InboxIcon /> 
+                 <SecurityIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Security & Privacy" />
               </ListItemButton>
@@ -197,7 +261,7 @@ const signOutHandler = () => {
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <InboxIcon /> 
+                <GavelIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Terms & Condition" />
               </ListItemButton>
@@ -207,7 +271,7 @@ const signOutHandler = () => {
             <ListItem  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <InboxIcon /> 
+               <InfoIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Help" />
               </ListItemButton>
@@ -226,22 +290,22 @@ const signOutHandler = () => {
               </ListItemButton>
             </ListItem>
             </Link>
-            <Link href="/notification">
+            <Link href="/CompletedOrder">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <MailIcon />
+                  <CheckCircleIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Completed" />
               </ListItemButton>
             </ListItem>
             </Link>
-            <Link href="/notification">
+            <Link href="/PendingOrder">
             <ListItem disablePadding>
               <ListItemButton>
             
           <ListItemIcon>
-                  <MailIcon />
+                 <TimerIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Pending" />
               </ListItemButton>
