@@ -13,6 +13,8 @@ const Confirm = () => {
 
 
     const [pickup, setPickup] = useState()
+
+    
      
     const getPickupCoordinates = (pick) => {
         const pickup = pick;

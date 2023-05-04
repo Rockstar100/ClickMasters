@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -16,34 +17,8 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function Userlist() {
-  const Click = (e) => {
-    e.preventDefault();
-    swal({
-      title: "Are you sure?",
-      text: "You want to Confirm the User!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        swal("Accepted the User Sucessfully", {
-          icon: "success",
-        });
-      } else {
-        swal("You have cancelled the  process!");
-      }
-    });
-
-  }
-  const Click1 = (e) => {
-    e.preventDefault();
-    swal("Are you sure you want to Decline this?", {
-      buttons: ["No", "Yes"],
-    })
-  }
-
+export default function CompletedOrder() {
+  
   return (
     <Wrapper>
       <Sidenav/>
@@ -61,34 +36,34 @@ export default function Userlist() {
       <Grid container spacing={1}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Avatar sx={{ width: 85, height: 85 }} alt="complex" src="https://img.freepik.com/free-photo/handsome-cheerful-young-man-with-stylish-haircut-dimpled-smile-posing-isolated-against-blank-yellow-wall-dressed-cozy-maroon-sweater-having-confident-look_343059-4609.jpg?w=1060&t=st=1682656098~exp=1682656698~hmac=79af306031aa744ebb8896785ebef8672942b684083bf38476b670fc46bff7d9" />
+            <Avatar sx={{ width: 85, height: 85 }} alt="complex" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
           </ButtonBase>
         </Grid>
         <Grid item xs={10} sm container>
           <Grid item xs container direction="column" spacing={1}>
             <Grid item xs>
-              <Typography gutterBottom variant="h5" component="div">
-             <strong> Aditya Jadon</strong>  
+              <Typography gutterBottom variant="subtitle1" component="div">
+                Allen Walker
               </Typography>
               <Typography variant="body2" gutterBottom>
-            <strong>Requirement-</strong>  Pre-wedding Photoshoot
+                Professional Shoot
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 ID: 1030114
               </Typography>
             </Grid>
-            <Grid item>
-            <Button onClick={Click} variant="contained" className='bg-black hover:bg-green-700' sx={{m:2, }}>
-              Accept
-            </Button>
-            <Button onClick={Click1} variant="outlined" color="error">
-              Decline
-            </Button>
-            </Grid>
+           
           </Grid>
           <Grid item>
-          <Button color="secondary">Know More</Button>
+          {/* <Button color="secondary">Know More</Button> */}
+          <Grids >
+           <img width="70px" src="https://img.freepik.com/free-vector/illustration-reverse-clock-icon_53876-5629.jpg?w=740&t=st=1682631477~exp=1682632077~hmac=38c4cca30732072f4577a405f1943a486cbd901d7a7f9de119faf8c5db94a87b"/>
+          <Typography variant="h6" color="">
+                Pending
+                </Typography>
+            </Grids>
           </Grid>
+          
         </Grid>
       </Grid>
     </Paper>
@@ -98,4 +73,7 @@ export default function Userlist() {
 
 const Wrapper = tw.div`
  h-screen ml-10 mt-10 h-screen ml-10 
+`
+const Grids = tw.div`
+flex justify-end items-center mr-10 mt-5
 `

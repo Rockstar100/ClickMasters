@@ -1,10 +1,11 @@
 import React from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mui/material'
+import Sidenav from './Sidenav'
 import tw from "tailwind-styled-components"
 function SecurityPrivacy() {
   return (
     <Wrapper>
-
+<Sidenav/>
       {/* <Title>Security & Privacy</Title> */}
     <Typography variant="h4" noWrap component="div">
                <strong>    Change Password</strong>   

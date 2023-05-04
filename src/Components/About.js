@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Sidenav from './Sidenav'
 import Sidenav from './Sidenav'
 import { Grid, Typography,TextField ,Box  } from '@mui/material';
 const About = () => {
@@ -8,7 +8,7 @@ const About = () => {
       
     return (
         <>
-           
+            <Sidenav/>
             <div >
                 <img
                     src="https://cdn.olaelectric.com/ev-discovery-platform/wysiwyg/Banner_Image_About_Page_49d62e8de3.webp"

@@ -1,12 +1,13 @@
 import { Typography ,Grid} from '@mui/material'
 import React from 'react'
 import tw from "tailwind-styled-components"
-
+import Sidenav from './Sidenav'
 function TermsCondition() {
     const GridStyle ={paddingLeft:'10%' ,paddingRight:'10%'}
     const margins = {marginTop:'8%'}
     return (
         <Wrapper>
+            <Sidenav/>
         <Grid style={GridStyle} >
         
         <Grid align='center' style={margins}>

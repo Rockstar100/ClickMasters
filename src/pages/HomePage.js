@@ -46,7 +46,7 @@ export default function HomePage() {
     signOut(auth)
         .then(() => {
             setUser(null)
-            router.push('/Login')
+            router.push('/GoogleLogin')
         })
         .catch((error) => {
             console.log(error.message)
@@ -64,6 +64,7 @@ export default function HomePage() {
    
     <Wrapper>
      
+     <Sidenav/>
       {/* <Map id="map" /> */}
       <MapWrapper>
       <HomepageMap id ="map"/>
@@ -83,17 +84,22 @@ export default function HomePage() {
       <ActionButtons>
       <ActionButtonWrapper>
       <Link href ="/Search">
+
       <ActionButton>
        <AddAPhotoIcon  style={styleForButton} />
        Hire a Photographer</ActionButton>
       </Link>
       </ActionButtonWrapper>  
       <ActionButton>
-      
+       
+      <Link href ="/Forms">
+       <ActionButton>
       <CameraIcon style={styleForButton} />
       Become a Photographer</ActionButton>
+      </Link>
+      </ActionButton>
       <Help>
-      <Link href ="/">
+      <Link href ="/Help">
       <ActionButton>
         
       <SupportAgentIcon style={styleForButton}/>
@@ -127,10 +133,10 @@ const Header = tw.div `
 flex justify-between items-center
 `
 const UberLogo = tw.img`
-h-20
+h-20 ml-10 mt-3
 `
 const Profile = tw.div`
-flex items-center
+flex items-center mr-10 mt-3
 `
 const UserImage =tw.img`
 h-12 w-12 rounded-full border-gray-200 p-px

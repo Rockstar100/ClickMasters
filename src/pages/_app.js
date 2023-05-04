@@ -3,12 +3,15 @@ import 'tailwindcss/tailwind.css'
 import "mapbox-gl/dist/mapbox-gl.css"
 import Sidenav from './Sidenav'
 import tw from "tailwind-styled-components"
+import { AuthContextProvider } from './AuthContext'
 export default function App({ Component, pageProps }) {
 
   return (
     <Wrapper>
-     <Sidenav/>
+    
+    
     <Component {...pageProps} />
+   
     </Wrapper>
   ) 
 }
