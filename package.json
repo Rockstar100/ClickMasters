@@ -6,31 +6,44 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "server": "nodemon server.js",
+    "lint": "next lint",
+    "proxy": "http://localhost:8080"
   },
- 
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@datepicker-react/styled": "^2.8.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.1",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@supabase/supabase-js": "^2.21.0",
+    "antd": "^5.4.7",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.0-alpha3",
     "chart": "^0.1.2",
     "chart.js": "^4.2.1",
+    "cloudinary": "^1.36.4",
+    "colors": "^1.4.0",
+    "concurrently": "^8.0.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-formidable": "^1.2.0",
     "firebase": "^9.20.0",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^9.0.0",
     "mapbox-gl": "^2.14.1",
     "mdb-react-ui-kit": "^6.0.0",
+    "moment": "^2.29.4",
     "mongodb": "^5.3.0",
     "mongoose": "^7.1.0",
+    "morgan": "^1.10.0",
     "next": "13.3.0",
     "next-auth": "^4.22.1",
     "nodemailer": "^6.9.1",
@@ -43,9 +56,11 @@
     "react-dom": "18.2.0",
     "react-google-autocomplete": "^2.7.3",
     "react-icons": "^4.8.0",
+    "react-loader-spinner": "^5.3.4",
     "react-mapbox-autocomplete": "^0.2.3",
     "react-native-webview": "^12.0.2",
     "react-rating": "^2.0.5",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "react-select": "^5.7.2",
     "react-use-file-upload": "^0.9.5",
@@ -53,12 +68,30 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "autoprefixer": "^10.4.14",
     "nodemon": "^2.0.22",
     "postcss": "^8.4.22",
+    "prisma": "^4.13.0",
     "tailwindcss": "^3.3.1",
     "typescript": "5.0.4"
-  }
+  },
+  "devServer": {
+    "inline": true,
+    "contentBase": "./dist",
+    "port": "8080",
+    "proxy": {
+      "/api/**": {
+        "target": "http://localhost:8080",
+        "secure": false
+      }
+    }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "proxy": "http://localhost:8080",
+  "author": "",
+  "license": "ISC"
 }

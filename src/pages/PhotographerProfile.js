@@ -15,9 +15,13 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { PhotographerDetail } from '../Data/PhotographerDetail';
 import swal from 'sweetalert';
 import Sidenav from './Sidenav'
-
+import { useSelector } from 'react-redux';
+import { useParams } from 'next/navigation';
+import { getUser } from '../redux/featuers/userSlice';
+import axios from 'axios';
 function PhotographerProfile() {
-
+const navauser = useSelector(getUser)
+console.log("nava",navauser)
     const Click = (e) => {
         e.preventDefault();
         swal({
@@ -42,14 +46,36 @@ function PhotographerProfile() {
     console.log(PhotographerDetail)
     const router = useRouter()
     const { details } = router.query
-  
+    const params = useParams();
     const [photographer, setPhotographer] = React.useState([]);
+    const [data, setData] = useState([])
   
 
     const { id } = router.query
    
+    const getSelectedCamerman = async () => {
+        try {
+          const res = await axios.post("http://localhost:8080/api/v1/cameraman/getSelectedCameraman",
+          {cameramanId:params.cameramanId},
+         {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+              },
+
+            }
+                );
+          console.log("mera",res.data.data)
+          if (res.data.success) {
+            setData(res.data.data)
+          }
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
 
     useEffect(() => {
+        getSelectedCamerman ()
 
         {
             PhotographerDetail.map((PhotographerDetail) => {
@@ -65,7 +91,7 @@ function PhotographerProfile() {
         }
 
     }, [id])
-    console.log(photographer.name)
+ 
 
     // console.log(name)
 

@@ -2,7 +2,11 @@ import React from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mui/material'
 import Sidenav from './Sidenav'
 import tw from "tailwind-styled-components"
+import { useSelector } from 'react-redux'
+import { getUser } from '../redux/featuers/userSlice'
 function SecurityPrivacy() {
+  const users = useSelector(getUser);
+  console.log("sec",users);
   return (
     <Wrapper>
 <Sidenav/>

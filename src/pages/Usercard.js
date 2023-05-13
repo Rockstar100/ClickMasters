@@ -10,15 +10,38 @@ import Link from 'next/link'
 import MyProfile from './MyProfile';
 import { PhotographerDetail } from '../Data/PhotographerDetail';
 import swal from 'sweetalert';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function Usercard() {
     const [photographer, setPhotographer] = React.useState([]);
+    const[data,setData]=useState([])
+    const getAllCamerman = async () => {
+      try {
+        const res = await axios.get('http://localhost:8080/api/v1/users/getAllCameraman',
+       
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem('token'),
+            },
+          }
+              );
+        console.log(res.data.data)
+        if (res.data.success) {
+          setData(res.data.data)
+        }
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
     
     useEffect(()=>{
     
         setPhotographer(PhotographerDetail)
+        getAllCamerman()
      
-    })
+    },[])
     const Click = (e) => {
         e.preventDefault();
         swal({
@@ -91,9 +114,7 @@ export default function Usercard() {
               // drop: drop
 
           }
-      }}        onClick={() => {
-          alert("Redirecting to Photographers profile");
-        }}
+      }}    
       >
  <Buttons  >View Profile</Buttons>      </Link>
 

@@ -5,6 +5,7 @@ export const cardetail =[
         image: "https://www.freepnglogos.com/uploads/wedding/bride-and-groom-wedding-png-transparent-image-10.png",
         title: "Marrige Fuction",
         multiplier: 1,
+       
         
 
     },

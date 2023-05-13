@@ -1,39 +1,29 @@
-import NextAuth from "next-auth"
-import FacebookProvider from 'next-auth/providers/facebook'
-import GoogleProvider from 'next-auth/providers/google'
-import EmailProvider from 'next-auth/providers/email'
-import GithubProvider from "next-auth/providers/github"
-// export const authOptions = {
-//   // Configure one or more authentication providers
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import NextAuth from "next-auth";
+// import userModel from '../../../../models/userModels'
+// import dbConnect from '../../../../config/db'
+// const jwtt = "XYZ1234567"
+
+// export default NextAuth({
+//   session: {
+//     strategy: "jwt",
+//   },
 //   providers: [
-//     GithubProvider({
-//       clientId: process.env.GITHUB_ID,
-//       clientSecret: process.env.GITHUB_SECRET,
-//     }),
-//     // ...add more providers here
+//     CredentialsProvider({
+//       async authorize(credentials,req) {
+//         dbConnect();
+//         const { email, password } = credentials;
+//         const user = await userModel.findOne({email})
+//         if(!user){
+//           throw new Error("User not found");
+//         }
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if(!isMatch){
+//           throw new Error("Invalid email or password");
+//         }
+//         return user;
+//       }
+//     })
 //   ],
-// }
-
-export default NextAuth({
-  providers: [
-    // OAuth authentication providers...
-    // GithubProvider({
-    //        clientId: process.env.GITHUB_ID,
-    //        clientSecret: process.env.GITHUB_SECRET,
-    //      }),
-    // FacebookProvider({
-    //   clientId: process.env.FACEBOOK_ID,
-    //   clientSecret: process.env.FACEBOOK_SECRET
-    // }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
-    }),
-    // Passwordless / email sign in
-    // EmailProvider({
-    //   server: process.env.MAIL_SERVER,
-    //   from: 'NextAuth.js <no-reply@example.com>'
-    // }),
-  ]
-
-})
+//   secret: jwtt,
+// });

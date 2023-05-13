@@ -39,6 +39,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { onAuthStateChanged,signOut } from 'firebase/auth';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import {message} from 'antd';
+import { getUser } from '../redux/featuers/userSlice';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -90,10 +94,18 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const state = useSelector(state => state)
+  const users = useSelector(getUser)
+  
+
+  const notification = users.user?.notification.length;
+ 
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -125,14 +137,18 @@ useEffect(() => {
 }, [])
 
 const signOutHandler = () => {
-    signOut(auth)
-        .then(() => {
-            setUser(null)
-            router.push('/GoogleLogin')
-        })
-        .catch((error) => {
-            console.log(error.message)
-        })
+   localStorage.clear();
+   message.success('Logout Successfully');
+    router.push('/Login/Login')
+
+    // signOut(auth)
+    //     .then(() => {
+    //         setUser(null)
+    //         router.push('/GoogleLogin')
+    //     })
+    //     .catch((error) => {
+    //         console.log(error.message)
+    //     })
 }
 const menuId = 'primary-search-account-menu';
 
@@ -159,7 +175,7 @@ const renderMobileMenu = (
         aria-label="show 17 new notifications"
         color="inherit"
       >
-        <Badge badgeContent={17} color="error">
+        <Badge badgeContent={notification} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
@@ -194,7 +210,7 @@ const renderMobileMenu = (
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={1 } color="error">
+              <Badge badgeContent={notification} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton></Link>
@@ -225,7 +241,11 @@ const renderMobileMenu = (
         </DrawerHeader>
         <Divider />
         <List>
-        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}></Avatar> <br /> <Typography>Hello {user && user.name} </Typography></Grid>
+        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}>
+          </Avatar> <br /> 
+          {/* <Typography>Hello {user && user.name } </Typography> */}
+          <Typography>Hello {users.user?.name} </Typography>
+          </Grid>
           <Link href="/">
             <ListItem  disablePadding>
               <ListItemButton>

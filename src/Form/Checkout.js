@@ -15,7 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import { message } from 'antd';
+import axios from 'axios';
 import tw from "tailwind-styled-components"
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router'
 // function Copyright() {
 //   return (
 
@@ -57,7 +61,37 @@ const theme = createTheme(
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const router = useRouter()
+  const {user} = useSelector(state => state.user)
+const handler = async(values)=>{
 
+  try{
+   const res = await axios.post('http://localhost:8080/api/v1/apply-cameraman',{...values,userId : user._id},{
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem('token'),
+    },
+    credentials: 'include'
+   }) 
+    if(res.data.success){
+      message.success(res.data.message)
+
+      // router.push('/')
+
+    }
+    else{
+      message.error(res.data.message)
+
+    }
+    
+  }
+  catch(error){
+    console.log(error)
+    message.error("Something Went Wrong")
+
+
+  }
+
+}
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
