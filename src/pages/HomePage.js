@@ -7,6 +7,7 @@ import styles from '../styles/Home.module.css'
 import tw from "tailwind-styled-components"
 import Map from '../components/Map'
 import Link from 'next/link'
+import { Avatar, Grid } from '@mui/material';
 import HomepageMap from './HomepageMap'
 import logo from './logo.png'
 import When from './When'
@@ -17,6 +18,10 @@ import Sidenav from './Sidenav'
 import { auth, provider } from "./firebase"
 import { onAuthStateChanged,signOut } from 'firebase/auth';
 import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser } from '../redux/featuers/userSlice';
+import axios from 'axios'
+
 const inter = Inter({ subsets: ['latin'] })
 const styleForButton = {
   height: '50px',
@@ -27,8 +32,10 @@ const styleForButton = {
 
 export default function HomePage() {
   const [user, setUser] = useState(null)
+
   const router = useRouter()
   useEffect(() => {
+
      return onAuthStateChanged(auth, user => {
           if (user) {
               setUser({
@@ -41,6 +48,46 @@ export default function HomePage() {
           }
       })
   }, [])
+ 
+  const  users  = useSelector(state => state.user)
+  
+console.log(users);
+  const [userData, setUserData] = useState();
+// const callAboutPage = async () => {
+ 
+//       try {
+//           const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+//           { token: localStorage.getItem('token') },
+//            {
+//                headers: {
+//                   Authorization: "Bearer " + localStorage.getItem('token'),
+//               },
+//               credentials: 'include'
+//           });
+//           if(res.data.success){
+//             setUserData(res.data.data)
+//             dispatch(getUser(res.data.data))
+//         }
+//         else{
+//             localStorage.clear()
+//         }
+
+//     } catch (error) {
+//         localStorage.clear()
+//         console.log(error);
+//     }
+   
+//   };
+     
+
+
+
+
+  // useEffect(() => {
+  //     if(!users){
+  //         callAboutPage();
+  //     }
+  // }, [users,getUser])
 
   const signOutHandler = () => {
     signOut(auth)
@@ -74,10 +121,13 @@ export default function HomePage() {
         
         <UberLogo src= "https://theuniques.in//images/clickmasterslogo.png" />
         <Profile>
-          <Name>{user && user.name}</Name>
-          <UserImage
+          {/* <Name>{user && user.name}</Name> */}
+          <Name>{users.user?.name}</Name>
+          <Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}></Avatar>
+
+          {/* <UserImage
           src={user && user.photoUrl}
-          />
+          /> */}
         </Profile>
        
       </Header>
@@ -92,7 +142,7 @@ export default function HomePage() {
       </ActionButtonWrapper>  
       <ActionButton>
        
-      <Link href ="/Forms">
+      <Link href ="/photographerRegister">
        <ActionButton>
       <CameraIcon style={styleForButton} />
       Become a Photographer</ActionButton>
@@ -142,7 +192,7 @@ const UserImage =tw.img`
 h-12 w-12 rounded-full border-gray-200 p-px
 `
 const Name = tw.div`
-mr-4 w-20`
+   w-20`
 const ActionButtons = tw.div `
 flex mt-5
 `

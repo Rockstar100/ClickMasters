@@ -46,7 +46,7 @@ const Rider = () => {
                     {cardetail.title}
                 </Service>
                 <Price>
-                $52.00
+                Rs 52.00
             </Price>
             </CarDetails>
 

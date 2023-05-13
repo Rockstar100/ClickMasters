@@ -2,64 +2,116 @@ import React from 'react'
 import { Inter } from 'next/font/google'
 import styles from '../styles/Home.module.css'
 import tw from "tailwind-styled-components"
-import Login from './Login/Login'
 import Link from 'next/link'
 import Sidenav from './Sidenav'
-import HomepageMap from './HomepageMap'
 import HomePage from './HomePage'
+import ProtectedRoutes from '../Components/ProtectedRoutes'
+import PublicRoute from '../Components/PublicRoute'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import {useDispatch } from 'react-redux';
+import { getUser } from '../redux/featuers/userSlice';
+import Spinner from '../Components/Spinner'
+import axios from 'axios'
 
-import { AuthContext } from './AuthContext'
 const inter = Inter({ subsets: ['latin'] })
+
 const styleForButton = {
   height: '50px',
   width: '50px'
 }
-if(typeof document !== 'undefined') {
-  // you are safe to use the "document" object here
-  console.log(document.location.href);
-}
 
+// if (typeof document !== 'undefined') {
+//   console.log(document.location.href);
+// }
 
 export default function Home() {
+  const { loading } = useSelector(state => state.alert)
+  const dispatch = useDispatch()
+  const { users } = useSelector(state => state.user)
+  const [userData, setUserData] = useState();
+const callAboutPage = async () => {
+ 
+      try {
+          const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+          { token: localStorage.getItem('token') },
+           {
+               headers: {
+                  Authorization: "Bearer " + localStorage.getItem('token'),
+              },
+              credentials: 'include'
+          });
+          if(res.data.success){
+            setUserData(res.data.data)
+            dispatch(getUser(res.data.data))
+        }
+        else{
+            localStorage.clear()
+            
+        }
+        console.log(res.data.data); 
+    } 
+     catch (error) {
+        localStorage.clear()
+        console.log(error);
 
-  // const currentLocation = window.location.href;
+    }
+   
+  };
+     
 
-  // const maps = new mapboxgl.Map({
-  //   container: 'map',
-  //   style: 'mapbox://styles/mapbox/streets-v11',
-  //   center: ,
-  //   zoom:  ,
-  // });
-  const router = useRouter()
-  const {currentUser} = useContext(AuthContext)
+
+
+
+  useEffect(() => {
+      if(!users){
+          callAboutPage();
+      }
+  }, [users,getUser])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Login/Login');
+    }
+    else {
+      router.push('/');
+    }
+  }, []);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
-  const handleLogin = () => {
-    // perform login and set isAuthenticated state to true
-    setIsAuthenticated(true);
+
+
+  const handleLogin = (token) => {
+    // Store token in local storage and set isAuthenticated state to true
+    localStorage.setItem('token', token);
+    
   };
 
   const handleLogout = () => {
-    // perform logout and set isAuthenticated state to false
-    setIsAuthenticated(false);
+    // Remove token from local storage and set isAuthenticated state to false
+    localStorage.removeItem('token');
+   
   };
 
-  console.log(currentUser)
-
-
   return (
-   
     <Wrapper>
-     <HomePage/>
-
-   </Wrapper>
+      <Sidenav />
+      {/* {loading ? (
+        <Spinner />
+      ) : ( */}
+        <ProtectedRoutes>
+        
+            <HomePage />
+          
+        </ProtectedRoutes>
+      {/* )} */}
+    </Wrapper>
   );
 }
 
 const Wrapper = tw.div`
-flex-1 overflow-y-scroll flex flex-col
-`
+  flex-1 overflow-y-scroll flex flex-col `

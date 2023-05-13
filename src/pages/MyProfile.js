@@ -7,64 +7,70 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { auth, provider } from "./firebase"
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { PhotographerDetail } from '../Data/PhotographerDetail';
 import Sidenav from './Sidenav'
-
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser } from '../redux/featuers/userSlice';
+import profilepic from './profilepic.png';
 
 function MyProfile() {
 
+    const dispatch = useDispatch()
+    const  users  = useSelector(state => state.user)
+    console.log("pro",users)
+    const [userData, setUserData] = useState();
+const callAboutPage = async () => {
+   
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            { token: localStorage.getItem('token') },
+             {
+                 headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token'),
+                },
+                credentials: 'include'
+            });
+            
+            if(res.data.success){
+                setUserData(res.data.data)
+                dispatch(getUser(res.data.data))
+            }
+            else{
+                localStorage.clear()
+            }
 
+        } catch (error) {
+            localStorage.clear()
+            console.log(error);
+        }
+     
+    };
+       
+
+
+
+
+    useEffect(() => {
+        if(!users){
+            callAboutPage();
+        }
+    }, [users,getUser])
 
     const router = useRouter()
     const { details } = router.query
-    // const [data, setData] = useState({})
-    // const [name, setName] = useState("")
-    // const [email, setEmail] = useState("")
-    // const [adress, setAdress] = useState("")
-    // const [phone, setPhone] = useState("")
-    // const [photoUrl, setPhotoUrl] = useState("")
-    // const [rating, setRating] = useState("")
 
-    // console.log(data)
-
-    // const { id } = router.query
-
-    // useMemo(() => {
-
-    //     {
-    //         PhotographerDetail.map((item) => {
-    //             if (item.id === id) {
-    //                 console.log(item)
-    //                 setData(item)
-    //                 setName(item.name)
-    //                 setEmail(item.email)
-    //                 setAdress(item.adress)
-    //                 setPhone(item.phone)
-    //                 setPhotoUrl(item.photoUrl)
-    //                 setRating(item.rating)
-
-    //                 // PhotographerName: item.name,
-    //                 // PhotographerEmail: item.email,
-    //                 // PhotographerAdress: item.adress,
-    //                 // PhotographerPhone: item.phone,
-    //                 // PhotographerPhotoUrl: item.photoUrl,
-    //                 // PhotographerRating: item.rating,
-
-    //             }
-    //         })
-    //     }
-
-    // }, [id])
 
     const StyleChart = { width: '100%' }
     const GridStyle = { width: '70%' }
     const [user, setUser] = useState(null)
     useEffect(() => {
-       return onAuthStateChanged(auth, user => {
+        return onAuthStateChanged(auth, user => {
             if (user) {
                 setUser({
                     name: user.displayName,
@@ -83,17 +89,18 @@ function MyProfile() {
 
     return (
         <Wrapper>
-<Sidenav/>
+            <Sidenav />
             <div className="flex font-sans">
                 <div className="flex-none w-48 relative">
-                    <img src={user && user.photoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <Image src={profilepic} alt="" className="absolute inset-0 w-auto h-full object-cover" loading="lazy" />
                 </div>
-                <form className="flex-auto p-6">
+                <form className="flex-auto p-6" method="GET">
                     <div className="flex flex-wrap">
                         <h1 className="flex-auto text-4xl font-semibold text-slate-900">
-                            {user && user.name}
+                            {/* {user && user.name} */}
+                            {userData?.name}
                         </h1>
-                       
+
                         <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2 mb-6">
                             User
                         </div>
@@ -136,7 +143,7 @@ function MyProfile() {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                             <div>
                                 <h3 class="text-md font-bold mb-2">Email</h3>
-                                <p class="text-gray-700">{user && user.email}</p>
+                                <p class="text-gray-700">{userData?.email}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Phone</h3>
@@ -153,7 +160,7 @@ function MyProfile() {
                         </div>
                     </div>
                     <div style={StyleChart}>
-                        
+
                     </div></Grid>
             </Grid >
         </Wrapper>

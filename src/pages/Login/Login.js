@@ -1,100 +1,85 @@
-import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mui/material'
+"use client";
+
 import React, { useState ,useEffect } from 'react'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { green } from '@mui/material/colors';
-import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/router';
-import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
-import { auth, provider } from "../firebase"
-import * as firebase from 'firebase/app';
 import tw from 'tailwind-styled-components'
-import {GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWithCredential,signInWithEmailAndPassword} from "firebase/auth"
-import { useContext } from 'react';
-import { AuthContext } from '../AuthContext';
-
-
+import axios from 'axios';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { message } from 'antd';
+import {useDispatch} from 'react-redux'
+import {signIn} from 'next-auth/react'
+import {showLoading, hideLoading} from '../../redux/featuers/alertSlice'
 function Login() {
+   
 
-    const {dispatch} = useContext(AuthContext)
-    const [error, setError] =useState(false);
+ 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useRouter();
-    console.log(email,password)
-    const handleLogin = (e) => { 
-        e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            dispatch({type: 'LOGIN', isAuthenticated: true, user: user})
-            navigate.push('/')
-
-        })
-        .catch((error) => {
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // ..
-            setError(true)
-        });
-    }
+  
     const router = useRouter();
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                router.push('/')
-            }
-        })
-    }, [])
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    const paperStyle = { padding: 20, height: '60vh', width: 280 }
-    const avatarStyle = { backgroundColor: green }
-    const linkUnStyle = {
-        textDecoration: 'none'
-    }
-    const btnstyle = {
-        margin: "20px auto",
-        backgroundColor: 'black'
-    }
-    return (
-        <Wrapper>
-            <form onSubmit={handleLogin}>
-             <Grid align='center'>
-             <h1 className="alert alert-info text-3xl mt-4 mb-4 " role="alert" align='center'>
-            Welcome   to Click Masters
-          </h1>
-          <p className="mb-11">"We assure you to provide Best Photographers Near you at Best Prize"</p>
-                <Paper elevation={10} style={paperStyle}>
-                    <Grid align="center">
-                        <Avatar style={avatarStyle} alt="Remy Sharp" src="" ><LockOutlinedIcon /></Avatar>
-                        <h2> Sign In</h2>
-                        <TextField id="filled-basic" onChange={e=>setEmail(e.target.value)} label="Enter Username" variant="filled" color="success" fullWidth />
-                        <TextField id="filled-basic" onChange={e=>setPassword(e.target.value)} label="Password" type='password' variant="filled" color="success"  fullWidth  />
-                       
-                    </Grid>
-                    <Checkbox {...label} defaultChecked color="success" />Remember Me
-                    <br />
+    const dispatch = useDispatch();
+    // const handle = async () => {
+    //     const res = await signIn('credentials', {
+    //         redirect: false,
+    //         email: email,
+    //         password: password,
+    //     });
+    //     console.log(res)
+        
+    // }
 
-                    {/* <Button style={btnstyle} type="submit" onClick={()=> signInWithPopup(auth,provider)} variant="contained"  color="success" fullWidth>Sign In</Button> */}
-                    <Button style={btnstyle} type="submit"  variant="contained"  color="success" fullWidth>Sign In</Button>
-                <Typography>
-                    <Link style={linkUnStyle} href='#'>Forgot Password</Link>
-                </Typography>
-                <Typography> Already have an account
-                    <Link style={ linkUnStyle} href='/SignUp'>Sign Up</Link>
-                    {error && <p className="text-red-500 text-center">Wrong email or Password</p> }
-                </Typography>
-                </Paper>
-            </Grid>
-            </form>
-        </Wrapper>
+    
+
+    const submitHandler = async (e)  => {
+        e.preventDefault();
+        const values = {
+            email: email,
+            password: password,
+        };
+
+        try {
+            // dispatch(showLoading());
+            const res = await axios.post('http://localhost:8080/api/v1/users/login', values);
+         
+
+            // dispatch(hideLoading());
+            if(res.data.success){
+                localStorage.setItem("token", res.data.token);
+
+                message.success("Login Successfull");
+                router.push('/');
+            } else {
+                message.error(res.data.message);
+            }
+        } catch(error) {
+            // dispatch(hideLoading());
+            console.log(error);
+            message.error("Invalid Credentials");
+        }
+    };
+
+    const paperStyle = { padding: '20px', height: '50vh', width: '280px' };
+    const labelStyle = { marginBottom: '5px', display: 'block' };
+    const inputStyle = { padding: '5px',marginBottom: '15px',height:"40px", width: '100%' };
+    const btnStyle = { margin: '20px auto', backgroundColor: 'black', color: 'white', padding: '5px 10px' };
+
+    return (
+        <div className="flex flex-col items-center justify-center h-screen">
+            <div className="bg-white rounded-md shadow-lg" style={paperStyle}>
+                <h2 className="text-center text-2xl font-bold">Login</h2>
+
+                <form onSubmit={submitHandler}>
+                    <label htmlFor="email" style={labelStyle}>Email:</label>
+                    <input className='rounded-md bg-gray-100 shadow-lg' type="email" value={email} onChange={e => setEmail(e.target.value)} id="email" name="email" style={inputStyle} />
+
+                    <label htmlFor="password" style={labelStyle}>Password:</label>
+                    <input className='rounded-md  bg-gray-100 shadow-lg' type="password" value={password} onChange={e => setPassword(e.target.value)} id="password" name="password" style={inputStyle} />
+
+                    <button className='rounded-md '  type="submit" style={btnStyle}>Submit</button>
+                </form>
+            </div>
+        </div>
     )
 }
 
-export default Login
-
-const Wrapper = tw.div`
-mt-10 h-screen ml-10 mt-10
-`
-
-
+export default Login;

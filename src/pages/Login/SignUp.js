@@ -11,46 +11,75 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import tw from 'tailwind-styled-components'
 import axios from 'axios'
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-const paperStyle = { padding: '30px 20px', width:"30vw", margin: "20px auto" }
+import { message } from 'antd';
+import {useDispatch} from 'react-redux'
+import {showLoading, hideLoading} from '../../redux/featuers/alertSlice'
+const paperStyle = { padding: '30px 20px', width: "30vw", margin: "20px auto" }
 const avatarStyle = { backgroundColor: 'green' }
 
 
 function SignUp() {
-    
+    const router = useRouter();
+    const dispatch = useDispatch();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [cpassword, setCPassword] = React.useState('');
-    const [fname, setFname] = React.useState('');
+    const [name, setname] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [gender, setGender] = React.useState('female');
-    
-    const submitHandler =  async (e) => {
-        e.preventDefault();
-       try{
+    // proxy = "http://localhost:8080"
+    // const values = {
+    //     email: email,
+    //     password: password,
 
-        const {data} = await axios.post("../api/register", {
-            fname,
-            email,
-            password,
-            phone,
-           
-        });
-        console.log(data)
+    //     fname: fname,
 
-       }
-         catch(error){
-            console.log(error)
+    // }
+   
+
+    const submitHandler = async (e) => {
+
+        const values = {
+            name: name,
+            email: email,
+            password: password,
+
+          
+          };
+   
+
+        try{
+
+            dispatch(showLoading());
+            const res = await axios.post('http://localhost:8080/api/v1/users/register', values)
+            dispatch(hideLoading());
+            console.log(res)
+            if(res.data.success){
+               
+                message.success("User registered successfully")
+
+            }
+            else{
+                message.error(res.data.message)
             }
 
+        }
+        catch(error){
+            dispatch(hideLoading());
+            console.log(error)
+            message.error("Something went wrong")
+
+        }
+
     };
 
-    const handleChange = (event) => {
-        setGender(event.target.value);
-    };
+
+
     const margintop = {
         marginTop: "15px ",
-      
+
     }
     const marginbottom ={
         marginBottom:"15px"
@@ -58,42 +87,54 @@ function SignUp() {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <Wrapper>
-        <Grid>
-            <Paper elevation={20} style={paperStyle}>
-                <Grid align='center' style={margintop}>
-                    <Avatar style={avatarStyle}><AddCircleOutlineIcon /></Avatar>
-                    <h2>Sign Up</h2>
-                    <Typography style={marginbottom} variant='caption' gutterBottom>Please fill this form to make an account</Typography>
-                </Grid>
-                <form
-                   onSubmit={submitHandler}
+            {/* <Grid>
+                <Paper elevation={20} style={paperStyle}>
+                    <Grid align='center' style={margintop}>
+                        <Avatar style={avatarStyle}><AddCircleOutlineIcon /></Avatar>
+                        <h2>Sign Up</h2>
+                        <Typography style={marginbottom} variant='caption' gutterBottom>Please fill this form to make an account</Typography>
+                    </Grid> */}
+                    <form
+                        method='POST'
+                        onSubmit={submitHandler}
 
-                >
-                    <TextField style={marginbottom} id="filled-basic" value={fname} onInput={ e=>setFname(e.target.value)} label="Enter Username" variant="filled" color="success" fullWidth required />
-                  
+                    >
+
+                        <label for="name">Name:</label>
+                        <input type="text" value={name} onInput={ e=>setname(e.target.value)} id="name" name="name" /><br />
+
+                        <label for="email">Email:</label>
+                        <input type="email"value={email} onInput={ e=>setEmail(e.target.value)} id="email" name="email" /><br />
+
+                        <label for="password">Password:</label>
+                        <input type="password" value={password} onInput={e=>setPassword(e.target.value)} id="password" name="password" /><br />
+
+                        <input type="submit" value="Submit" />
+                        {/* <TextField style={marginbottom} name='name' id="filled-basic" value={fname} onInput={ e=>setFname(e.target.value)} label="Enter Username" variant="filled" color="success" fullWidth required /> */}
+                        {/*                   
                     <FormControl style={marginbottom}>
                         <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
                         <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
                             value={gender}
-                            onChange={handleChange} style={{ display: 'initial' }}
+                            onInput={ e=>setGender(e.target.value)} style={{ display: 'initial' }}
                         >
                             <FormControlLabel value="female" control={<Radio />} label="Female" />
                             <FormControlLabel value="male" control={<Radio />} label="Male" />
                         </RadioGroup>
-                    </FormControl>
-                    <TextField style={marginbottom} id="filled-basic"  value={email} onInput={ e=>setEmail(e.target.value)} type='email' label='Email' variant="filled" color="success" fullWidth required />
-                    <TextField style={marginbottom} id="filled-basic" value={phone} onInput={ e=>setPhone(e.target.value)} type='number' label='Phone Number'  variant="filled" color="success" fullWidth required />
-                    <TextField style={marginbottom} id="filled-basic" value={password} onInput={e=>setPassword(e.target.value)} type='password' label='Password' variant="filled" color="success" fullWidth required />
-                    <TextField style={marginbottom} id="filled-basic"value={cpassword} onInput={e=>setCPassword(e.target.value)} type='password' label='Confirm Password' variant="filled" color="success" fullWidth required />
-                  
-                    <Checkbox {...label} defaultChecked color="success" />I accept all the terms and condition <br/>
-                    <Button style={margintop} type='submit'  variant='contained'  fullWidth>Sign Up</Button>
+                    </FormControl> */}
+                        {/* <TextField style={marginbottom} name='email' id="filled-basic"  value={email} onInput={ e=>setEmail(e.target.value)} type='email' label='Email' variant="filled" color="success" fullWidth required /> */}
+                        {/* <TextField style={marginbottom} id="filled-basic" value={phone} onInput={ e=>setPhone(e.target.value)} type='number' label='Phone Number'  variant="filled" color="success" fullWidth required /> */}
+                        {/* <TextField style={marginbottom} id="filled-basic" name='password' value={password} onInput={e=>setPassword(e.target.value)} type='password' label='Password' variant="filled" color="success" fullWidth required /> */}
+                        {/* <TextField style={marginbottom} id="filled-basic"value={cpassword} onInput={e=>setCPassword(e.target.value)} type='password' label='Confirm Password' variant="filled" color="success" fullWidth required /> */}
 
-                </form>
-            </Paper>
-        </Grid>
+                        {/* <Checkbox {...label} defaultChecked color="success" />I accept all the terms and condition <br/>
+                    <Button style={margintop} type='submit'  variant='contained'  fullWidth>Sign Up</Button> */}
+
+                    </form>
+                {/* </Paper> */}
+            {/* </Grid> */}
         </Wrapper>
     )
 }
