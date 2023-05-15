@@ -86,6 +86,22 @@ const cameramanSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    notification : {
+        type: Array,
+        default: [],
+    },
+    CompletedOrder : {
+        type: Array,
+        default: [],
+    },
+    RejectedOrder : {
+        type: Array,
+        default: [],
+    },
+    PendingOrder : {
+        type: Array,
+        default: [],
+    },
   
    
 }, {timestamps: true}

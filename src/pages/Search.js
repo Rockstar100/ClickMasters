@@ -8,7 +8,7 @@ import { useState,useReducer } from 'react'
 import Calendar from 'react-calendar'
 import '../styles/Home.module.css'
 import {DateRangeInput, DateSingleInput, Datepicker} from '@datepicker-react/styled'
-
+import moment from 'moment/moment'
 
 const initialState = {
   startDate: null,
@@ -32,8 +32,16 @@ const Search = () => {
     const [pick, setpick] = useState("");
     const [value, setValue] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
+    const [startdate, setStartdate] = useState({});
+    const [enddate, setEnddate] = useState({});
     // const [drop, setdrop] =useState("");
     // console.log(pick)
+    console.log(state.startDate)
+    console.log(state.endDate)
+    const sdate = moment(state.startDate).format('YYYY-MM-DD')
+    const edate = moment(state.endDate).format('YYYY-MM-DD')
+    
+    
     return (
         <Wrapper>
 
@@ -64,7 +72,9 @@ const Search = () => {
                         startDate={state.startDate} // Date or null
                         endDate={state.endDate} // Date or null
                         focusedInput={state.focusedInput} // START_DATE, END_DATE or null
+                        
                         />
+                       
                     {/* </DatePickerWrapper> */}
 
                     {/* <Input type="text" placeholder="When?" 
@@ -83,7 +93,9 @@ const Search = () => {
                 pathname: "/confirm",
                 query: {
                     pick: pick,
-                    // drop: drop
+                    sdate: sdate,
+                    edate: edate,
+                   
 
                 }
             }

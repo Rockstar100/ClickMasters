@@ -18,30 +18,9 @@ import Sidenav from './Sidenav'
 import { useSelector } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { getUser } from '../redux/featuers/userSlice';
+import { message } from 'antd';
 import axios from 'axios';
 function PhotographerProfile() {
-const navauser = useSelector(getUser)
-console.log("nava",navauser)
-    const Click = (e) => {
-        e.preventDefault();
-        swal({
-          title: "Are you sure?",
-          text: "You want to hire this photographer!",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            swal("Notification was Sent to photographer.Be in touch for Further Details ", {
-              icon: "success",
-            });
-          } else {
-            swal("You have cancelled the hiring process!");
-          }
-        });
-      }
-
 
     console.log(PhotographerDetail)
     const router = useRouter()
@@ -49,14 +28,18 @@ console.log("nava",navauser)
     const params = useParams();
     const [photographer, setPhotographer] = React.useState([]);
     const [data, setData] = useState([])
+    const [user, setUser] = useState(null)
+    const[date,setDate]=useState()
+    const [Time,setTime]=useState()
+    const [isAvailable, setIsAvailable] = useState()
+   
   
-
     const { id } = router.query
    
     const getSelectedCamerman = async () => {
         try {
           const res = await axios.post("http://localhost:8080/api/v1/cameraman/getSelectedCameraman",
-          {cameramanId:params.cameramanId},
+          {cameramanId:id},
          {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem('token'),
@@ -73,48 +56,128 @@ console.log("nava",navauser)
           console.log(error);
         }
       }
+      const callAboutPage = async () => {
+ 
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            { token: localStorage.getItem('token') },
+             {
+                 headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token'),
+                },
+                credentials: 'include'
+            });
+            if(res.data.success){
+              setUser(res.data.data)
+              
+             
+          }
+         
+      } 
+       catch (error) {
+        
+          console.log(error);
+    
+      }
+     
+    };
+    const handleAvailable = async () => {
+        try {
+          const res = await axios.post("http://localhost:8080/api/v1/users/booking-avilability", {
+            cameramanId: query.cameramanId,
+            date, Time
+          }, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem('token'),
+            },
+          });
+          if (res.data.success) {
+            setIsAvailable(true)
+            message.success(res.data.message)
+          }
+          else {
+            message.error(res.data.message)
+          }
+      
+        }
+        catch(error){
+          console.log(error)
+        }
+      
+      
+       }
 
     useEffect(() => {
         getSelectedCamerman ()
+        callAboutPage()
 
-        {
-            PhotographerDetail.map((PhotographerDetail) => {
-                
-                
-                if (PhotographerDetail.id == id) {
-                    
-                    setPhotographer(PhotographerDetail)
-                  
-
-                }
-            })
-        }
+        
 
     }, [id])
- 
+    if (!id) return null; // check if query object is not empty
+
+    const handleBooking = async () => {
+      try{
+        setIsAvailable(true)
+        // if(!date && !Time){
+        //   return alert("Please select date and time")}
+        const res = await axios.post("http://localhost:8080/api/v1/users/bookCameraman", 
+        {cameramanId: id,
+          userId: user._id,
+          cameramanInfo: data,
+          userInfo: user,
+          date: "2021-10-10",
+          time: "10:00",
+        }, 
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem('token'),
+          }
+        }
+  
+        )
+        if(res.data.success){
+          message.success("Cameraman hired",res.data.message)
+        }
+        else{
+          message.error("Error while hiring")
+        }
+  
+  
+      }
+      catch(error){
+        console.log(error)
+  
+      }
+    }
+    const Click = (e) => {
+        e.preventDefault();
+        swal({
+          title: "Are you sure?",
+          text: "You want to hire this photographer!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+           
+            swal("Notification was Sent to photographer.Be in touch for Further Details ", {
+              icon: "success",
+
+            });
+          } else {
+            swal("You have cancelled the hiring process!");
+          }
+        });
+      }
 
     // console.log(name)
 
     const StyleChart = { width: '100%' }
     const GridStyle = { width: '70%' }
-    const [user, setUser] = useState(null)
-    // useEffect(() => {
-    //    return onAuthStateChanged(auth, user => {
-    //         if (user) {
-    //             setUser({
-    //                 name: user.displayName,
-    //                 email: user.email,
-    //                 adress: user.adress,
-    //                 phone: user.phone,
-    //                 photoUrl: user.photoURL,
-
-    //             }
-    //             )
-    //         } else {
-    //             setUser(null)
-    //         }
-    //     })
-    // }, [])
+    
+  
 
     return (
         <Wrapper>
@@ -122,21 +185,21 @@ console.log("nava",navauser)
 
             <div className="flex font-sans">
                 <div className="flex-none w-48 relative">
-                    <img src={photographer.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <img src={data?.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                 </div>
                 <form className="flex-auto p-6">
                     <div className="flex flex-wrap">
                         <h1 className="flex-auto text-4xl font-semibold text-slate-900">
-                            {photographer.name}
+                            {data?.name}
                         </h1>
                         <div className="text-lg font-semibold text-slate-500">
-                            <CurrencyRupeeIcon /> {photographer.price}/h
+                            <CurrencyRupeeIcon /> {data?.price}/h
                         </div>
                         <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2 mb-6">
                             Proffesional Photographer
                         </div>
                     </div>
-                    <Typography >{photographer.description }</Typography>
+                    <Typography >{data?.description }</Typography>
 
                     <div className="flex mt-9">
                         <StarIcon /><StarIcon /><StarIcon /><StarHalfIcon /><StarOutlineIcon />
@@ -175,16 +238,16 @@ console.log("nava",navauser)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                             <div>
                                 <h3 class="text-md font-bold mb-2">Email</h3>
-                                <p class="text-gray-700">{photographer.email}</p>
+                                <p class="text-gray-700">{data?.email}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Phone</h3>
-                                <p class="text-gray-700">{photographer.phone}</p>
+                                <p class="text-gray-700">{data?.phone}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Address</h3>
-                                <p class="text-gray-700">{photographer.address
-}</p>
+                                <p class="text-gray-700">{data?.address?.state}</p>
+
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Other Information</h3>
@@ -201,6 +264,7 @@ console.log("nava",navauser)
 
     )
 }
+
 
 const Wrapper = tw.div`
     flex

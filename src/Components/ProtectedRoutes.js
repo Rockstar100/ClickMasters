@@ -41,7 +41,7 @@ function ProtectedRoutes({ children }) {
   
   useEffect(() => {
     if (typeof localStorage !== 'undefined' && !localStorage.getItem('token')  ) {
-      router.push('/Login/Login');
+      router.push('/Login');
      
       
     } else {
