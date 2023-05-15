@@ -46,6 +46,7 @@
     "morgan": "^1.10.0",
     "next": "13.3.0",
     "next-auth": "^4.22.1",
+    "next-cloudinary": "^4.10.0",
     "nodemailer": "^6.9.1",
     "react": "18.2.0",
     "react-azure-maps": "^0.4.5",

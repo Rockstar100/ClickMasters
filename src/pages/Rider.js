@@ -7,10 +7,12 @@ import { on } from 'events'
 import { useRef } from 'react';
 
 import { useRouter } from 'next/router';
+import { Link } from 'react-router-dom'
 
-const Rider = () => {
+const Rider = (props ) => {
     const router = useRouter();
     const [car,setCar] = useState([]);
+    console.log(props)
     
     useEffect(() => {
         setCar(cardetail)
@@ -20,9 +22,18 @@ const Rider = () => {
     const handleCarSelection = (id)=> {
 
         setSelectedCar(id)
-        router.push(`/${id}`);
+        router.push({
+            pathname: '/Usercard',
+            query: {
+                pick: props.pickup,
+                sdate: props.sdate,
+                edate: props.edate,
+                detail : id
+            }})
+        
 
     }
+    
     
 
 
@@ -34,9 +45,21 @@ const Rider = () => {
         <Wrapper>
             <Title>select your Event</Title>
             <CarList>
+                {/* <Link 
+                 href={{
+                    pathname: "/Usercard",
+                    query: {
+                        pick: props.pick,
+                        sdate: props.sdate,
+                        edate: props.edate,
+                        detail : cardetail.title
+                       
+    
+                    }}}> */}
+                
             {cardetail.map((cardetail)=>
             <Car key={cardetail.id
-            } onClick={() => handleCarSelection(cardetail.id)}
+            } onClick={() => handleCarSelection(cardetail.title)}
              
              >
                
@@ -52,7 +75,6 @@ const Rider = () => {
 
            
         </Car>
-
             
             )
             }
@@ -73,7 +95,7 @@ const Rider = () => {
         } */}
                     
             
-      
+                    {/* </Link> */}
             </CarList>
         </Wrapper>
     )

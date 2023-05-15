@@ -43,6 +43,8 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import {message} from 'antd';
 import { getUser } from '../redux/featuers/userSlice';
+import { useDispatch } from 'react-redux';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -83,8 +85,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-  // backgroundColor: 'black',
-  // marginTop: ' -50px',
+
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
@@ -100,11 +101,9 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const state = useSelector(state => state)
-  const users = useSelector(getUser)
-  
+const dispatch = useDispatch();
 
-  const notification = users.user?.notification.length;
+
  
 
   const isMenuOpen = Boolean(anchorEl);
@@ -122,24 +121,46 @@ export default function PersistentDrawerLeft() {
   };
   const [user, setUser] = useState(null)
 const router = useRouter()
+const [userData, setUserData] = useState();
+
+const callAboutPage = async () => {
+
+    try {
+        const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+        { token: localStorage.getItem('token') },
+         {
+             headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+            },
+            credentials: 'include'
+        });
+      
+        if(res.data.success){
+          setUserData(res.data.data)
+          dispatch(getUser(res.data.data))
+      }
+      
+  } 
+   catch (error) {
+     
+      console.log(error);
+
+  }
+ 
+};
 useEffect(() => {
-   return onAuthStateChanged(auth, user => {
-        if (user) {
-            setUser({
-                name: user.displayName,
-                photoUrl: user.photoURL,
-            }
-            )
-        } else {
-            setUser(null)
-        }
-    })
+   
+        callAboutPage();
+  
 }, [])
+
+
+const notification = userData?.notification?.length;
 
 const signOutHandler = () => {
    localStorage.clear();
    message.success('Logout Successfully');
-    router.push('/Login/Login')
+    router.push('/Login')
 
     // signOut(auth)
     //     .then(() => {
@@ -241,10 +262,10 @@ const renderMobileMenu = (
         </DrawerHeader>
         <Divider />
         <List>
-        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}>
+        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={userData?.profie_pic}>
           </Avatar> <br /> 
-          {/* <Typography>Hello {user && user.name } </Typography> */}
-          <Typography>Hello {users.user?.name} </Typography>
+          
+          <Typography>Hello {userData?.name} </Typography>
           </Grid>
           <Link href="/">
             <ListItem  disablePadding>

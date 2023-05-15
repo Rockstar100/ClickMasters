@@ -1,9 +1,11 @@
 const userModel = require('../models/userModels');
 const cameramanModel = require('../models/cameramanModel')
+const bookingModel = require('../models/bookingModel')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const colors = require('colors');
 const jwtt = "XYZ1234567"
+const moment = require('moment');
 const registerController = async(req,res)=> {
     try{
         const existingUser = await userModel.findOne({email: req.body.email});
@@ -73,8 +75,6 @@ const authController = async(req,res)=> {
         
         const user = userModel.findById({_id: req.body.userId});
       
-        
-       
      
         try {
             if(!user){
@@ -90,17 +90,7 @@ const authController = async(req,res)=> {
           } catch (error) {
             console.log(error);
             res.status(500).send({ success: false, message: `Internal Server Error:${error.message}`, error });
-          
-
-    //         res.status(200).send({
-    //             success: true,
-
-    //             data:{
-    //                 name: user.name,
-                   
-    //                 email: user.email,
-    //             },
-    //              message: 'User logged in successfully'});
+        
                  
        }
 
@@ -155,6 +145,11 @@ const authController = async(req,res)=> {
 //   }
 const applyCameraman = async (req, res) => {
     try {
+      
+      const salt = await bcrypt.genSalt(10);
+      const password = req.body.password;
+      const hashedPassword = await bcrypt.hash(password, salt);
+      req.body.password = hashedPassword;
       const newCameraman = await cameramanModel({...req.body, status: "pending"})
       await newCameraman.save()
   
@@ -275,7 +270,97 @@ const getAllCameramanController = async(req,res)=> {
             })
     }
 }
+const bookCameramanController = async(req,res)=> {
+    try{
+        req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString()
+        req.body.time = moment(req.body.time, "HH:mm").toISOString()
+        req.body.status = "pending"
+        const newBooking = new bookingModel(req.body)
+        await newBooking.save()
+        const user = await userModel.findOne({_id:req.body.userId});
+        const cameraman = await cameramanModel.findOne({_id:req.body.cameramanId});
+        const notification = cameraman.notification
+        notification.push({
+            type: "Booking Request",
+            message: `New booking Request from ${req.body.userInfo.name}`,
+            data: user,
+            onclickPath: "/user/booking",
+          })
+            await cameraman.save()
+        res.status(200).send({
+            success : true,
+            data : newBooking,
+            message : "Cameraman booked successfully",
+            })
 
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).send({
+            success : false, 
+            error,
+            message : "Error while booking cameraman",
+            })
+    }
+
+}
+
+const  bookingavilabilityController = async(req,res)=> {
+    try {
+        const date = moment(req.body.date, "DD-MM-YYYY").toISOString()
+        const fromtime = moment(req.body.time, "HH:mm").subtract(1, "hours").toISOString()
+        const totime = moment(req.body.time, "HH:mm").subtract(1, "hours").toISOString()
+        const cameramanId = req.body.cameramanId
+        const avilability = await bookingModel.find({
+            cameramanId,
+            date,
+            time:{
+                $gte: fromtime,
+                $lte: totime
+            }
+        })
+        if(avilability.length > 0){
+            return res.status(200).send({
+                success : true,
+                message : "Cameraman is not avilable at this time",
+                })
+        }
+        else{
+            return res.status(200).send({
+                success : true,
+                message : "Cameraman is avilable at this time",
+                })
+        }  
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).send({
+            success : false,
+            error,
+            message : "Error while getting booking avilability",
+            })
+    }
+
+}
+const userBookingsController = async(req,res)=> {
+    try{
+        const bookings = await bookingModel.find({userId: req.body.userId})
+        res.status(200).send({
+            success : true,
+            data : bookings,
+            message : "User bookings fetched successfully",
+            })
+
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).send({
+            success : false,
+            error,
+            message : "Error while getting user bookings",
+            })
+    }
+}
 
 
 
@@ -287,5 +372,8 @@ module.exports = {
     getAllNotificationController,
     updateController,
     getAllCameramanController,
+    bookCameramanController,
+    bookingavilabilityController,
+    userBookingsController
   
 }

@@ -5,6 +5,7 @@ import logo from './logo.png';
 import axios from 'axios'
 import { useRouter } from 'next/router';;
 import { message } from 'antd';
+import Link from 'next/link';
 import {useDispatch} from 'react-redux'
 import {showLoading, hideLoading} from '../redux/featuers/alertSlice'
 function Login() {
@@ -88,7 +89,7 @@ function Login() {
             {/* <button type="submit" className=" bg-black" >Submit</button> */}
             <p className='mb-3'><a href='#'>Forgot Password</a></p>
 
-            <p className='mb-3'>New User?<a href='#'>Sign In</a></p>
+            <p className='mb-3'>New User?<Link href="/Register">Sign In</Link></p>
             <button  className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
                 Submit
             </button>

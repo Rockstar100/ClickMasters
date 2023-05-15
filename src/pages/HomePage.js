@@ -34,78 +34,13 @@ export default function HomePage() {
   const [user, setUser] = useState(null)
 
   const router = useRouter()
-  useEffect(() => {
 
-     return onAuthStateChanged(auth, user => {
-          if (user) {
-              setUser({
-                  name: user.displayName,
-                  photoUrl: user.photoURL,
-              }
-              )
-          } else {
-              setUser(null)
-          }
-      })
-  }, [])
  
   const  users  = useSelector(state => state.user)
   
-console.log(users);
+
   const [userData, setUserData] = useState();
-// const callAboutPage = async () => {
- 
-//       try {
-//           const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
-//           { token: localStorage.getItem('token') },
-//            {
-//                headers: {
-//                   Authorization: "Bearer " + localStorage.getItem('token'),
-//               },
-//               credentials: 'include'
-//           });
-//           if(res.data.success){
-//             setUserData(res.data.data)
-//             dispatch(getUser(res.data.data))
-//         }
-//         else{
-//             localStorage.clear()
-//         }
 
-//     } catch (error) {
-//         localStorage.clear()
-//         console.log(error);
-//     }
-   
-//   };
-     
-
-
-
-
-  // useEffect(() => {
-  //     if(!users){
-  //         callAboutPage();
-  //     }
-  // }, [users,getUser])
-
-  const signOutHandler = () => {
-    signOut(auth)
-        .then(() => {
-            setUser(null)
-            router.push('/GoogleLogin')
-        })
-        .catch((error) => {
-            console.log(error.message)
-        })
-}
-  // const maps = new mapboxgl.Map({
-  //   container: 'map',
-  //   style: 'mapbox://styles/mapbox/streets-v11',
-  //   center: ,
-  //   zoom:  ,
-  // });
-  
 
   return (
    
@@ -121,9 +56,9 @@ console.log(users);
         
         <UberLogo src= "https://theuniques.in//images/clickmasterslogo.png" />
         <Profile>
-          {/* <Name>{user && user.name}</Name> */}
+      
           <Name>{users.user?.name}</Name>
-          <Avatar sx={{ width: 80, height: 80 }} src ={user && user.photoUrl}></Avatar>
+          <Avatar sx={{ width: 80, height: 80 }} src ={users?.user?.profie_pic}></Avatar>
 
           {/* <UserImage
           src={user && user.photoUrl}

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import tw from "tailwind-styled-components"
-import { Typography, Grid } from '@mui/material'
+import { Typography, Grid,Avatar } from '@mui/material'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import ChartHorizontal from './ChartHorizontal';
 import StarIcon from '@mui/icons-material/Star';
@@ -18,15 +18,17 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../redux/featuers/userSlice';
 import profilepic from './profilepic.png';
-
+import { data } from 'autoprefixer';
+import { CldImage } from 'next-cloudinary';
+import ProtectedRoutes from '../Components/ProtectedRoutes';
 function MyProfile() {
 
-    const dispatch = useDispatch()
-    const  users  = useSelector(state => state.user)
-    console.log("pro",users)
+ 
+    
     const [userData, setUserData] = useState();
-const callAboutPage = async () => {
-   
+
+    const callAboutPage = async () => {
+ 
         try {
             const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
             { token: localStorage.getItem('token') },
@@ -36,63 +38,44 @@ const callAboutPage = async () => {
                 },
                 credentials: 'include'
             });
-            
+          
             if(res.data.success){
-                setUserData(res.data.data)
-                dispatch(getUser(res.data.data))
-            }
-            else{
-                localStorage.clear()
-            }
-
-        } catch (error) {
-            localStorage.clear()
-            console.log(error);
-        }
+              setUserData(res.data.data)
+              dispatch(getUser(res.data.data))
+          }
+          
+      } 
+       catch (error) {
+         
+          console.log(error);
+  
+      }
      
     };
+ useEffect(() => {
        
-
-
-
-
-    useEffect(() => {
-        if(!users){
             callAboutPage();
-        }
-    }, [users,getUser])
-
+      
+    }, [data])
+    
+ 
     const router = useRouter()
-    const { details } = router.query
-
-
+ 
     const StyleChart = { width: '100%' }
     const GridStyle = { width: '70%' }
     const [user, setUser] = useState(null)
-    useEffect(() => {
-        return onAuthStateChanged(auth, user => {
-            if (user) {
-                setUser({
-                    name: user.displayName,
-                    email: user.email,
-                    adress: user.adress,
-                    phone: user.phone,
-                    photoUrl: user.photoURL,
-
-                }
-                )
-            } else {
-                setUser(null)
-            }
-        })
-    }, [])
+   
 
     return (
+        
         <Wrapper>
             <Sidenav />
+            <ProtectedRoutes>
+           
             <div className="flex font-sans">
                 <div className="flex-none w-48 relative">
-                    <Image src={profilepic} alt="" className="absolute inset-0 w-auto h-full object-cover" loading="lazy" />
+                    {/* <Image src={userData?.profile_pic} alt=""  className="absolute inset-0 w-auto h-full object-cover" loading="lazy" /> */}
+                    <Avatar className="absolute inset-0 w-auto h-full object-cover" variant='square' sx={{ width: 100, height: 100 }} src ={userData?.profie_pic}></Avatar>
                 </div>
                 <form className="flex-auto p-6" method="GET">
                     <div className="flex flex-wrap">
@@ -147,11 +130,11 @@ const callAboutPage = async () => {
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Phone</h3>
-                                <p class="text-gray-700">{user && user.phone}</p>
+                                <p class="text-gray-700">{userData?.phone}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Address</h3>
-                                <p class="text-gray-700">{user && user.adress}</p>
+                                <p class="text-gray-700">{userData?.address.address}</p>
                             </div>
                             <div>
                                 <h3 class="text-md font-bold mb-2">Other Information</h3>
@@ -161,8 +144,9 @@ const callAboutPage = async () => {
                     </div>
                     <div style={StyleChart}>
 
-                    </div></Grid>
-            </Grid >
+                  </div>  
+                  </Grid>
+            </Grid ></ProtectedRoutes>
         </Wrapper>
 
 

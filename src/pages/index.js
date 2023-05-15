@@ -42,6 +42,7 @@ const callAboutPage = async () => {
               },
               credentials: 'include'
           });
+          console.log(res.data.data)
           if(res.data.success){
             setUserData(res.data.data)
             dispatch(getUser(res.data.data))
@@ -50,7 +51,7 @@ const callAboutPage = async () => {
             localStorage.clear()
             
         }
-        console.log(res.data.data); 
+        
     } 
      catch (error) {
         localStorage.clear()
@@ -73,7 +74,7 @@ const callAboutPage = async () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/Login/Login');
+      router.push('/Login');
     }
     else {
       router.push('/');

@@ -9,6 +9,9 @@ const Confirm = () => {
     const router = useRouter()
 
     const {pick} = router.query
+    const {sdate} = router.query
+    const {edate} = router.query
+  
 
 
 
@@ -69,7 +72,12 @@ const Confirm = () => {
            
         />
             <RideContainer>
-                <Rider/>
+                <Rider
+                pickup={pick}
+                sdate={sdate}
+                edate={edate}
+
+                />
 
                
 

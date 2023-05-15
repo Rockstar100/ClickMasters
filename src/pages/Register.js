@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import img from './f2.jpg';
 import logo from './logo.png';
 import Image from 'next/image'
 import axios from 'axios'
-import { useRouter } from 'next/router';;
+import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux'
 import { showLoading, hideLoading } from '../redux/featuers/alertSlice'
@@ -22,9 +22,8 @@ function Form() {
     const [profileimgUrl, setprofileimgUrl] = useState(null);
     const [uploadingImg, setUploadingimg] = useState(false);
     const [imgpreview, setimgpreview] = useState(null);
-
-    const dispatch = useDispatch()
-
+    const router = useRouter();
+    const dispatch = useDispatch();
   
 
     const handleImage = async (event) => {
@@ -39,14 +38,16 @@ function Form() {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", "Profile");
+            formData.append("cloud_name", "dghpjm2df");
             try {
                 setUploadingimg(true);
                 const res = await axios.post(
                     "https://api.cloudinary.com/v1_1/dghpjm2df/image/upload",
                     formData
                 );
-                setUploadingimg(false);
+                
                 setprofileimgUrl(res.data.secure_url);
+               
                
             } catch (error) {
                 console.log(error);
@@ -57,12 +58,18 @@ function Form() {
 
 
         }
+        
 
 
     }
+
     const submitHandler = async (event) => {
 
         event.preventDefault();
+       
+
+        // handleImage(event);
+      
         const values = {
             name: Name,
             email: email,
@@ -85,6 +92,7 @@ function Form() {
             if (res.data.success) {
 
                 message.success("User registered successfully")
+                router.push('/Login');
 
             }
             else {
@@ -209,7 +217,7 @@ function Form() {
                             type='file'
                             id="profilepic"
                             accept='image/*'
-                            onChange={handleImage}
+                            onChange = {(event)=>handleImage(event)}
                             className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                             required
                         />
