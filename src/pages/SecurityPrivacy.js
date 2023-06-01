@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { getUser } from '../redux/featuers/userSlice'
 function SecurityPrivacy() {
   const users = useSelector(getUser);
-  console.log("sec",users);
+ 
   return (
     <Wrapper>
 <Sidenav/>

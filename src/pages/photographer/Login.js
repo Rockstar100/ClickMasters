@@ -40,7 +40,7 @@ function Login() {
         try {
             // dispatch(showLoading());
             const res = await axios.post('http://localhost:8080/api/v1/cameraman/login', values);
-            console.log(res.data)
+          
          
 
             // dispatch(hideLoading());

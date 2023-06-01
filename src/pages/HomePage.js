@@ -37,6 +37,7 @@ export default function HomePage() {
 
  
   const  users  = useSelector(state => state.user)
+ 
   
 
   const [userData, setUserData] = useState();
@@ -76,17 +77,26 @@ export default function HomePage() {
       </Link>
       </ActionButtonWrapper>  
       <ActionButton>
-       
-      <Link href ="/photographerRegister">
+       {users.user.isCameraman == true ?(
+      <Link href ="/photographer/Login">
        <ActionButton>
+
       <CameraIcon style={styleForButton} />
-      Become a Photographer</ActionButton>
-      </Link>
+      Login as Photographer</ActionButton>
+      </Link>) : ( 
+        <Link href ="/photographerRegister">
+        <ActionButton>
+ 
+       <CameraIcon style={styleForButton} />
+       Become a Photographer</ActionButton>
+       </Link>
+
+      )
+       }
       </ActionButton>
       <Help>
       <Link href ="/Help">
       <ActionButton>
-        
       <SupportAgentIcon style={styleForButton}/>
       Help</ActionButton></Link>
       </Help>

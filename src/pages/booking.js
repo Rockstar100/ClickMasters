@@ -13,7 +13,7 @@ const booking = () => {
                 },
 
         })
-        console.log(res.data.data)
+       
         if(res.data.success){
             setBookings(res.data.data)
         }
