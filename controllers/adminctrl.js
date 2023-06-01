@@ -50,8 +50,9 @@ const getAllCameraman =async(req,res)=>{
 
 const changeAccountStatusController = async (req, res) => {
     try {
+   
       const { cameramanid, status } = req.body;
-      console.log(req.body);
+   
       const cameraman = await cameramanModel.findByIdAndUpdate(
        cameramanid,
         {status}
@@ -60,18 +61,19 @@ const changeAccountStatusController = async (req, res) => {
       //   { _id: cameramanid },
       //   { status: status }
       // );
-      const user = await userModel.findOne({ _id: cameraman.userId });
-
-      if (user) {
-        const notification = user.notification;
-        notification.push({
-          type: "Account Status",
-          message: `Your account status is ${status}`,
-          onClickPath: "/notification",
-        });
-        user.isPhotographer = status === "approved" ? true : false;
+      const user = await userModel.findByIdAndUpdate({ _id: cameraman.userId },
+        {status:status});
+      
+  
+        // const notification = user.notification;
+        // notification.push({
+        //   type: "Account Status",
+        //   message: `Your account status is ${status}`,
+        //   onClickPath: "/notification",
+        // });
+        user.isCameraman = status === "approved" ? true : false;
         await user.save();
-      }
+   
    
       
       res.status(201).send({

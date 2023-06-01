@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Table } from 'antd';
 
-function users() {
+function Users() {
 
   const [user,setUser] = useState([]);
   
@@ -41,19 +41,19 @@ const columns = [
 
   },
   {
-    tittle : 'Email',
+    title : 'Email',
     dataIndex : 'email'
   },
   {
-    tittle : 'Phone',
+    title : 'Phone',
     dataIndex : 'phone'
   },
   {
-    tittle : 'Created At',
+    title : 'Created At',
     dataIndex : 'createdAt'
   },
   {
-    tittle : 'Actions',
+    title : 'Actions',
     dataIndex : 'actions',
     render : (text, record) => (
       <div className='d-flex'>
@@ -64,14 +64,14 @@ const columns = [
   },  
 
 ]
-console.log(user)
+
   return (
     <>
-    <div>All users</div>
+    {/* <div>All users</div> */}
     <Table columns={columns} dataSource={user} />
     </>
 
   )
 }
 
-export default users
+export default Users

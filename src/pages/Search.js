@@ -34,10 +34,7 @@ const Search = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [startdate, setStartdate] = useState({});
     const [enddate, setEnddate] = useState({});
-    // const [drop, setdrop] =useState("");
-    // console.log(pick)
-    console.log(state.startDate)
-    console.log(state.endDate)
+    
     const sdate = moment(state.startDate).format('YYYY-MM-DD')
     const edate = moment(state.endDate).format('YYYY-MM-DD')
     

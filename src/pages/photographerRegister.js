@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import imgs from './img.png';
 import logo from './logo.png';
@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux'
 import {showLoading, hideLoading} from '../redux/featuers/alertSlice'
 import { getUser } from '../redux/featuers/userSlice';
 function photographerRegister() {
-  const users = useSelector(state => state.user)
+  
   const dispatch = useDispatch()
  
     const [Name, setName] = useState('');
@@ -29,9 +29,40 @@ function photographerRegister() {
     const [PanFile, setPanFile] = useState('');
     const [showOtherDetails, setshowOtherDetails] = useState(true);
     const [TermsCondition, setTermsCondition] = useState('');
+    const [userData, setUserData] = useState(null)
     // const dispatch = useDispatch()
     // const state = useSelector(state => state);
     const state = useSelector(state => state)
+    const callAboutPage = async () => {
+
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            { token: localStorage.getItem('token') },
+             {
+                 headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token'),
+                },
+                credentials: 'include'
+            });
+          
+            if(res.data.success){
+              setUserData(res.data.data)
+              
+          }
+          
+      } 
+       catch (error) {
+         
+          console.log(error);
+    
+      }
+     
+    };
+    useEffect(() => {
+       
+            callAboutPage();
+      
+    }, [])
 
   
     
@@ -47,19 +78,18 @@ function photographerRegister() {
         // setshowOtherDetails(false)
         event.preventDefault();
         const values = {
-            name: Name,
-            email: email,
+            name: userData.name,
+            email: userData.email,
             password: password,
             gender : selectedValues,
-            phoneNumber: phoneNumber,
-            address: Address,
+            phoneNumber: userData.phone,
+            address: userData.address,
             adharNumber: AdharNumber,
             adharFile: AdharFile,
             panNumber: PanNumber,
             panFile: PanFile,
-
-
-
+            userId: userData._id,
+            image: userData.profie_pic,
 
         };
         try {
@@ -67,7 +97,7 @@ function photographerRegister() {
             dispatch(showLoading());
             const res = await axios.post('http://localhost:8080/api/v1/users/apply-cameraman', { ...values})
             dispatch(hideLoading());
-            console.log(res)
+          
             if (res.data.success) {
 
                 message.success("User registered successfully")
@@ -106,6 +136,9 @@ function photographerRegister() {
    
 
     };
+    const handleClicked = () => {
+        router.push('/')
+    }
 
 
     
@@ -141,7 +174,7 @@ function photographerRegister() {
                                 <input
                                     type="text"
                                     id="first-name"
-                                    value={Name}
+                                    value= {userData?.name}
                                     onChange={(event) => setName(event.target.value)}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -169,7 +202,7 @@ function photographerRegister() {
                                 <input
                                     type="email"
                                     id="email"
-                                    value={email}
+                                    value={userData?.email}
                                     onChange={(event) => setEmail(event.target.value)}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -180,7 +213,7 @@ function photographerRegister() {
                                 <input
                                     type='tel'
                                     id="PhoneNumber"
-                                    value={phoneNumber}
+                                    value={userData?.phone}
                                     onChange={(event) => setphoneNumber(event.target.value)}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -191,7 +224,7 @@ function photographerRegister() {
                                 <input
                                     type="text"
                                     id="Address"
-                                    value={Address.address}
+                                    value={userData?.address.address}
                                     onChange={(event) => setAddress({ ...Address, address: event.target.value })}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -202,7 +235,7 @@ function photographerRegister() {
                                 <input
                                     type="state"
                                     id="state"
-                                    value={Address.state}
+                                    value={userData?.address.state}
                                     onChange={(event) => setAddress({ ...Address, state: event.target.value })}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -215,7 +248,7 @@ function photographerRegister() {
                                 <input
                                     type='tel'
                                     id="PinCode"
-                                    value={Address.pinCode}
+                                    value={userData?.address.pinCode}
                                     onChange={(event) => setAddress({ ...Address, pinCode: event.target.value })}
                                     className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
                                     required
@@ -317,7 +350,7 @@ function photographerRegister() {
                             <button onClick={handleClick} className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
                                 Back
                             </button>
-                            <button  className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
+                            <button onClick={handleClicked}  className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
                                 Apply Now
                             </button>
                         </form>

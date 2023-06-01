@@ -1,5 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import axios from 'axios'
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { Typography } from '@mui/material';
+
 import { Table, message } from 'antd';
 import moment from 'moment';
 const PhotographerBooking = () => {
@@ -14,7 +18,7 @@ const PhotographerBooking = () => {
                 },
 
         })
-        console.log(res.data.data)
+       
         if(res.data.success){
             setBookings(res.data.data)
         }
@@ -101,8 +105,9 @@ const PhotographerBooking = () => {
                <div>
                 {record.status === "pending" && (
                   <div>
-                      <button onClick={()=>handleAccept(record, 'approved')}>Accept</button>
-                    <button onClick={()=>handleAccept(record, 'reject')}>Reject</button>
+                         <button onClick={()=>handleAccept(record, 'approved')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px', marginRight:'5px' }}>Accept</button>
+                      <button onClick={()=>handleAccept(record, 'reject')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px' }}>Reject</button>
+
                   </div>
                 ) }
                </div>
@@ -113,10 +118,24 @@ const PhotographerBooking = () => {
         
     ] 
   return (
-    <div><h1>PhotographerBooking</h1>
- <Table dataSource={bookings} columns={columns} />
-    </div>
+    // <div><h1>PhotographerBooking</h1>\
+    <>
+<div style={{paddingLeft:'60px',paddingRight:'60px', backgroundColor:'#ffff'}} >
+    <div  >
+    <Box sx={{ bgcolor: 'black', height: '15vh' }} >
+        <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello Priyanshi!!</Typography>
+        <Typography px={3} pb={2} variant="h8" color={'white'} >Hope You are doing Great!!!!</Typography>
+    </Box>
+   </div>
+ <Table rowClassName={()=>'editable-row'} dataSource={bookings} bordered columns={columns} />
+ </div>
+    </>
   )
 }
 
 export default PhotographerBooking
+
+
+
+
+

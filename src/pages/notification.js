@@ -1,101 +1,62 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
-import { Avatar } from '@mui/material';
-import Button from '@mui/material/Button';
-import tw from 'tailwind-styled-components'
-import Sidenav from './Sidenav'
-import swal from 'sweetalert';
-const Img = styled('img')({
-  margin: 'auto',
-  display: 'block',
-  maxWidth: '100%',
-  maxHeight: '100%',
-});
+// import * as React from 'react';
+import axios from "axios";
+import SideNav from './Sidenav';
+import Notify from './Notify';
+import React, { useEffect, useState } from "react";
+import { getUser } from "../redux/featuers/userSlice";
+import { set } from 'mongoose';
+
+
 
 export default function Userlist() {
-  const Click = (e) => {
-    e.preventDefault();
-    swal({
-      title: "Are you sure?",
-      text: "You want to Confirm the User!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        swal("Accepted the User Sucessfully", {
-          icon: "success",
-        });
-      } else {
-        swal("You have cancelled the  process!");
-      }
-    });
+  const [users, setUsers] = useState(null);
+  const [notification, setNotification] = useState(null)
+  const [length, SetLength] = useState(null)
+  const [nullNotification, setNullNotification] = useState(false)
+  useEffect(() => {
+    if (!users) {
+        callAboutPage();
+    }
+  }, [users, getUser])
+  const callAboutPage = async () => {
 
-  }
-  const Click1 = (e) => {
-    e.preventDefault();
-    swal("Are you sure you want to Decline this?", {
-      buttons: ["No", "Yes"],
-    })
-  }
+    try {
+        const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            { token: localStorage.getItem('token') },
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token'),
+                },
+                credentials: 'include'
+            });
+        console.log("notifiaction card", res.data.data)
+        if (res.data.success) {
+            // setUserData(res.data.data)
+             setNotification(res.data.data.notification)
+             SetLength(res.data.data.notification.length)
+            // dispatch(getUser(res.data.data))
+        }
+        else {
+            localStorage.clear()
+
+        }
+
+    }
+    catch (error) {
+        localStorage.clear()
+        console.log(error);
+
+    }
+
+};
+
 
   return (
-    <Wrapper>
-      <Sidenav/>
-    <Paper
-      sx={{
-        p: 1,
-        margin: '10px auto',
-        maxWidth: 1000,
-        flexGrow: 1,
-        // marginTop: 10,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-      }}
-    >
-      <Grid container spacing={1}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Avatar sx={{ width: 85, height: 85 }} alt="complex" src="https://img.freepik.com/free-photo/handsome-cheerful-young-man-with-stylish-haircut-dimpled-smile-posing-isolated-against-blank-yellow-wall-dressed-cozy-maroon-sweater-having-confident-look_343059-4609.jpg?w=1060&t=st=1682656098~exp=1682656698~hmac=79af306031aa744ebb8896785ebef8672942b684083bf38476b670fc46bff7d9" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={10} sm container>
-          <Grid item xs container direction="column" spacing={1}>
-            <Grid item xs>
-              <Typography gutterBottom variant="h5" component="div">
-             <strong> Aditya Jadon</strong>  
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-            <strong>Requirement-</strong>  Pre-wedding Photoshoot
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1030114
-              </Typography>
-            </Grid>
-            <Grid item>
-            <Button onClick={Click} variant="contained" className='bg-black hover:bg-green-700' sx={{m:2, }}>
-              Accept
-            </Button>
-            <Button onClick={Click1} variant="outlined" color="error">
-              Decline
-            </Button>
-            </Grid>
-          </Grid>
-          <Grid item>
-          <Button color="secondary">Know More</Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Paper>
-    </Wrapper>
+    <>
+   <SideNav/>
+  
+    <Notify notification={notification} length={length}/>
+    </>
   );
 }
 
-const Wrapper = tw.div`
- h-screen ml-10 mt-10 h-screen ml-10 
-`

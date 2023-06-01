@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 const Rider = (props ) => {
     const router = useRouter();
     const [car,setCar] = useState([]);
-    console.log(props)
+    
     
     useEffect(() => {
         setCar(cardetail)

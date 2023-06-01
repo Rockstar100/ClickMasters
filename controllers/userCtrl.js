@@ -83,7 +83,7 @@ const authController = async(req,res)=> {
             
             const users = await userModel.findOne({_id: req.body.userId});
             res.status(200).send({ success: true, data: users });
-            users.password = undefined;
+            
            
             
            

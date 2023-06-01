@@ -74,7 +74,7 @@ function Form() {
             name: Name,
             email: email,
             password: password,
-            phoneNumber: phoneNumber,
+            phone: phoneNumber,
             address: Address,
             profie_pic: profileimgUrl,
 
@@ -88,7 +88,7 @@ function Form() {
             dispatch(showLoading());
             const res = await axios.post('http://localhost:8080/api/v1/users/register', values)
             dispatch(hideLoading());
-            console.log(res)
+       
             if (res.data.success) {
 
                 message.success("User registered successfully")
