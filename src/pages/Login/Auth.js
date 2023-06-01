@@ -26,7 +26,7 @@ export default function Auth(){
             email: 'example@email.com',
             password: 'example-password',
           })
-          console.log(data,error) 
+          
 
 
        }
