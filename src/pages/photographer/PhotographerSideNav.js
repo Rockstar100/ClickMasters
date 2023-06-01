@@ -33,23 +33,23 @@ import Menu from '@mui/material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect,useState } from 'react'
-import { auth, provider } from "./firebase"
+import { useEffect, useState } from 'react'
+// import { auth, provider } from "./firebase"
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { onAuthStateChanged,signOut } from 'firebase/auth';
+// import { onAuthStateChanged,signOut } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import {message} from 'antd';
-import { getUser } from '../redux/featuers/userSlice';
+import { message } from 'antd';
+// import { getUser } from '../redux/featuers/userSlice';
 import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-   
+
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -101,10 +101,10 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
- 
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -114,52 +114,53 @@ const dispatch = useDispatch();
   };
   const marginbottom = {
     marginBottom: '20px'
-}
+  }
 
   const handleDrawerClose = () => {
     setOpen(false);
   };
   const [user, setUser] = useState(null)
-const router = useRouter()
-const [userData, setUserData] = useState();
+  const router = useRouter()
+  const [userData, setUserData] = useState();
 
-const callAboutPage = async () => {
+  const callAboutPage = async () => {
 
     try {
-        const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+      const res = await axios.post('http://localhost:8080/api/v1/cameraman/getUserData',
         { token: localStorage.getItem('token') },
-         {
-             headers: {
-                Authorization: "Bearer " + localStorage.getItem('token'),
-            },
-            credentials: 'include'
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem('token'),
+          },
+          credentials: 'include'
         });
-      
-        if(res.data.success){
-          setUserData(res.data.data)
-          dispatch(getUser(res.data.data))
+
+      if (res.data.success) {
+       
+        setUserData(res.data.data)
+
       }
-      
-  } 
-   catch (error) {
-     
+
+    }
+    catch (error) {
+
       console.log(error);
 
-  }
- 
-};
-useEffect(() => {
-   
-        callAboutPage();
-  
-}, [])
+    }
+
+  };
+  useEffect(() => {
+
+    callAboutPage();
+
+  }, [])
 
 
-const notification = userData?.notification?.length;
+  const notification = userData?.notification?.length;
 
-const signOutHandler = () => {
-   localStorage.clear();
-   message.success('Logout Successfully');
+  const signOutHandler = () => {
+    localStorage.clear();
+    message.success('Logout Successfully');
     router.push('/Login')
 
     // signOut(auth)
@@ -170,48 +171,48 @@ const signOutHandler = () => {
     //     .catch((error) => {
     //         console.log(error.message)
     //     })
-}
-const menuId = 'primary-search-account-menu';
+  }
+  const menuId = 'primary-search-account-menu';
 
-const renderMobileMenu = (
-  <Menu
-    anchorEl={mobileMoreAnchorEl}
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-  
-    keepMounted
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-   
-  
-  >
-   
-    <MenuItem>
-      <IconButton
-        size="large"
-        aria-label="show 17 new notifications"
-        color="inherit"
-      >
-        <Badge badgeContent={notification} color="error">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
-      <p>Notifications</p>
-    </MenuItem>
-    
-  </Menu>
-);
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+
+
+    >
+
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={notification} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+
+    </Menu>
+  );
 
   return (
-    <Box sx={{ display: 'flex' ,margin : "-3%"  }} disable >
+    <Box sx={{ display: 'flex', margin: "-3%" }} disable >
       <CssBaseline />
-      <AppBar position="fixed" open={open} style={{backgroundColor:"black"}}>
+      <AppBar position="fixed" open={open} style={{ backgroundColor: "black" }}>
         <Toolbar>
-          <IconButton 
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -221,26 +222,26 @@ const renderMobileMenu = (
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-          Click Masters
+            Click Masters
           </Typography>
-          
+
           <div style={{ marginLeft: 'auto' }}>
             <Link href="/notification">
-          <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={notification} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton></Link>
-                               <Button onClick={()=>signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1, mx: 2}} variant="outlined">Sign Out</Button>
-                             {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={notification} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton></Link>
+            <Button onClick={() => signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1, mx: 2 }} variant="outlined">Sign Out</Button>
+            {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
                              */}
-                        </div>
+          </div>
         </Toolbar>
-        
+
       </AppBar>
       <Drawer
         sx={{
@@ -262,104 +263,84 @@ const renderMobileMenu = (
         </DrawerHeader>
         <Divider />
         <List>
-        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={userData?.profie_pic}>
-          </Avatar> <br /> 
-          
-          <Typography>Hello {userData?.name} </Typography>
+          <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src={userData?.profie_pic}>
+          </Avatar> <br />
+
+            <Typography>Hello {userData?.name} </Typography>
           </Grid>
           <Link href="/">
-            <ListItem  disablePadding>
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                < HomeIcon/>
+                  < HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
-            </Link>
+          </Link>
 
-            <Link href="/MyProfile">
-            <ListItem  disablePadding>
+          <Link href="/MyProfile">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                <PersonIcon/>
+                  <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="My Profile" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/SecurityPrivacy">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/SecurityPrivacy">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <SecurityIcon/>
+                  <SecurityIcon />
                 </ListItemIcon>
                 <ListItemText primary="Security & Privacy" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/TermsCondition">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/TermsCondition">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                <GavelIcon/>
+                  <GavelIcon />
                 </ListItemIcon>
                 <ListItemText primary="Terms & Condition" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/Help">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/Help">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-               <InfoIcon/>
+                  <InfoIcon />
                 </ListItemIcon>
                 <ListItemText primary="Help" />
               </ListItemButton>
             </ListItem>
-            </Link>
+          </Link>
         </List>
         <Divider />
         <List>
-        <Link href="/notification">
+          <Link href="/photographer/PhotographerBooking">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <MailIcon />
                 </ListItemIcon>
-                <ListItemText primary="All Notifications" />
+                <ListItemText primary="Accept & Reject Bookings" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            {/* <Link href="/CompletedOrder">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <CheckCircleIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Completed" />
-              </ListItemButton>
-            </ListItem>
-            </Link>
-            <Link href="/PendingOrder">
-            <ListItem disablePadding>
-              <ListItemButton>
-            
-          <ListItemIcon>
-                 <TimerIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Pending" />
-              </ListItemButton>
-            </ListItem>
-          </Link> */}
-               
-        
+          </Link>
+
+
+
         </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
 
-       
+
       </Main>
     </Box>
   );

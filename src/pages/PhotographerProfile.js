@@ -22,7 +22,7 @@ import { message } from 'antd';
 import axios from 'axios';
 function PhotographerProfile() {
 
-    console.log(PhotographerDetail)
+   
     const router = useRouter()
     const { details } = router.query
     const params = useParams();
@@ -47,7 +47,7 @@ function PhotographerProfile() {
 
             }
                 );
-          console.log("mera",res.data.data)
+          
           if (res.data.success) {
             setData(res.data.data)
           }
@@ -128,6 +128,7 @@ function PhotographerProfile() {
           userInfo: user,
           date: "2021-10-10",
           time: "10:00",
+          
         }, 
         {
           headers: {

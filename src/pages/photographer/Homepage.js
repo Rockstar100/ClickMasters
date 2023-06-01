@@ -1,5 +1,6 @@
-import React,{useEffect,useState} from 'react'
-import axios from 'axios'
+import React,{useEffect,useState} from 'react';
+import axios from 'axios';
+import PhotographerSideNav from './PhotographerSideNav';
 
 
 const Homepage = () => {
@@ -16,8 +17,9 @@ const Homepage = () => {
                 },
                 credentials: 'include'
             });
-            console.log(res.data.data)
+            
             if(res.data.success){
+          
               setUserData(res.data.data)
               
           }
@@ -35,7 +37,7 @@ const Homepage = () => {
      
     };
        
-  console.log(userData)
+
   
   
   
@@ -47,7 +49,8 @@ const Homepage = () => {
 
 
   return (
-    <div>Homepage </div>
+<><PhotographerSideNav/>
+hello</>
   )
 }
 

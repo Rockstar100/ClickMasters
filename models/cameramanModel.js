@@ -78,6 +78,9 @@ const cameramanSchema = new mongoose.Schema({
         type: String,
         default: '0',
     },
+    userId:{
+        type: String,
+    },
     reviews:{
         type: Array,
         default: [],

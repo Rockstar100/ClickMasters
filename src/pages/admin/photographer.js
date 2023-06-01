@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Table, message } from 'antd';
-function photographer() {
+import { message } from 'antd';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import Table from './Table';
+import { Table } from 'antd';
+function Photographer() {
 
-  const [user,setUser] = useState([]);
+  const [user, setUser] = useState([]);
   const getData = async () => {
     try {
       const res = await axios.get(
@@ -15,11 +19,11 @@ function photographer() {
           withCredentials: true
         }
       );
-    
+
 
 
       if (res.data.sucess) {
-        
+
         setUser(res.data.data)
       }
 
@@ -28,10 +32,10 @@ function photographer() {
     catch (error) {
       console.log(error)
     }
-  } 
+  }
   // const handleAccountStatus = async (record,status) => {
   //   const { cameramanids, status } = req.body;
-    
+
   //   try {
   //     const res = await axios.post(
   //       'http://localhost:8080/api/v1/admin/changeAccountStatus',
@@ -58,13 +62,13 @@ function photographer() {
   //   }
   // }  
   const handleAccountStatus = async (record, status) => {
-    console.log(record)
+   
     try {
       const res = await axios.post(
         'http://localhost:8080/api/v1/admin/changeAccountStatus',
 
         {
-          cameramanid:record._id,userId:record.userId, status: status
+          cameramanid: record._id, userId: record.userId, status: status
         },
         {
           headers: {
@@ -72,60 +76,71 @@ function photographer() {
           }
         }
       )
-     
-      if(res.data.success){
+
+      if (res.data.success) {
         message.success(res.data.message)
-       
+
       }
     } catch (error) {
-      console.log("mera",error)
+      console.log("mera", error)
       message.error(error.response.data.message)
     }
-  } 
+  }
   useEffect(() => {
-  getData()
-}, [])
+    getData()
+  }, [])
 
-const columns = [ 
-  {
-    title: 'Name',
-    dataIndex: 'name',
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
 
-  },
-  {
-    tittle : 'Email',
-    dataIndex : 'email'
-  },
-  {
-    tittle : 'Phone',
-    dataIndex : 'phone'
-  },
-  {
-    tittle : 'Created At',
-    dataIndex : 'createdAt'
-  },
-  {
-    tittle : 'Actions',
-    dataIndex : 'actions',
-    render : (text, record) => (
-      <div className='d-flex'>
-        {record.status === 'pending' ?(<button className='btn btn-primary' onClick={()=>handleAccountStatus(record, 'approved')}>
-          Accept</button>) :( <button className='btn btn-primary'>Reject</button>)}
-        {/* <button className='btn btn-primary' onClick={()=>handleAccountStatus(record, 'approved')}>Accept</button>
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email'
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address.state'  
+    },  
+    {
+      title: 'Adhar Number',
+      dataIndex: 'adharNumber'
+    },
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt'
+    },
+    {
+     title : 'Admin',
+     dataIndex : 'isAdmin'
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (text, record) => (
+        <div className='d-flex'>
+          {record.status === 'pending' ? ( 
+          <CheckCircleOutlineIcon onClick={() => handleAccountStatus(record, 'approved')}/>) : ( <DeleteIcon/>)}
+          {/* <button className='btn btn-primary' onClick={()=>handleAccountStatus(record, 'approved')}>Accept</button>
         <button className='btn btn-danger'>Delete</button> */}
-      </div>
+        </div>
 
-    ),
-  },  
+      ),
+    },
 
-]
+  ]
+
 
   return (
     <>
-    <div>All photographer</div>
-    <Table columns={columns}  dataSource={user} />
+      {/* <div>All photographer</div> */}
+     
+        <Table  rowClassName={() => 'editable-row'} bordered columns={columns} dataSource={user} />
+     
     </>
   )
 }
 
-export default photographer
+export default Photographer

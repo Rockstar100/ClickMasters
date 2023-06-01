@@ -20,7 +20,7 @@ export default function Usercard() {
   const [user, setUser] = useState([])
   const router = useRouter();
   const detail = router.query
-  console.log(detail)
+
   const [data, setData] = useState([])
   const [isAvailable, setIsAvailable] = useState(false)
   const [date, setDate] = useState("")
@@ -47,7 +47,7 @@ export default function Usercard() {
       console.log(error);
     }
   }
-  
+ 
   const callAboutPage = async () => {
 
     try {

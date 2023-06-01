@@ -14,6 +14,7 @@ import {useDispatch } from 'react-redux';
 import { getUser } from '../redux/featuers/userSlice';
 import Spinner from '../Components/Spinner'
 import axios from 'axios'
+import PhotographerSideNav from './photographer/PhotographerSideNav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,7 +43,7 @@ const callAboutPage = async () => {
               },
               credentials: 'include'
           });
-          console.log(res.data.data)
+         
           if(res.data.success){
             setUserData(res.data.data)
             dispatch(getUser(res.data.data))
@@ -111,6 +112,7 @@ const callAboutPage = async () => {
         </ProtectedRoutes>
       {/* )} */}
     </Wrapper>
+    // <PhotographerSideNav />  
   );
 }
 

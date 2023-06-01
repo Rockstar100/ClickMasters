@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    phone :{
+    phone:{
         type : String,
     },
     notification : {
@@ -48,6 +48,11 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
+    isCameraman:{
+        type: Boolean,
+        default: false,
+    },
+
 
 
 

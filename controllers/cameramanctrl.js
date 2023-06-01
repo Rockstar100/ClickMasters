@@ -175,10 +175,23 @@ const updatestatusController = async(req,res)=> {
 
         const{bookingId,status} = req.body
         const bookings = await bookingModel.findByIdAndUpdate(bookingId,{status})
+        const cameraman = await cameramanModel.findOne({_id: bookings.cameramanId});
         const user = await userModel.findOne({_id: bookings.userId});
         user.notification.push({
             type: "status updated",
             message: `Your booking status is ${status}`,
+            data : {
+                bookingId: bookings._id,
+                status: bookings.status,
+                cameramanId: bookings.cameramanId,
+                name: cameraman.name,
+                profie_pic: cameraman.profie_pic,
+                userId: bookings.userId,
+                date: bookings.date,
+                time: bookings.time,
+                location: bookings.location,
+                
+            },
             onclickPath: "/cameraman-booking",
           })
             await user.save()
