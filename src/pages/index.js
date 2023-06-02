@@ -67,20 +67,19 @@ const callAboutPage = async () => {
 
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
       if(!users){
           callAboutPage();
+          if (!token) {
+            router.push('/Login');
+          }
+          else {
+            router.push('/');
+          }
       }
   }, [users,getUser])
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/Login');
-    }
-    else {
-      router.push('/');
-    }
-  }, []);
+ 
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();

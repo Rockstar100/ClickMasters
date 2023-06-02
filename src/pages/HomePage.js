@@ -77,7 +77,7 @@ export default function HomePage() {
       </Link>
       </ActionButtonWrapper>  
       <ActionButton>
-       {users.user.isCameraman == true ?(
+       {users?.user?.isCameraman == true ?(
       <Link href ="/photographer/Login">
        <ActionButton>
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Typography } from '@mui/material';
-
+import PhotographerSidenav from './PhotographerSidenav';
 import { Table, message } from 'antd';
 import moment from 'moment';
 const PhotographerBooking = () => {
@@ -28,9 +28,11 @@ const PhotographerBooking = () => {
             console.log(error)
         }
     }
+   
     useEffect(() => {
         Bookings()
     }, [])
+    console.log("booking status",bookings)
     const handleAccept = async (record, status) => {
         
         try{
@@ -119,13 +121,16 @@ const PhotographerBooking = () => {
     ] 
   return (
     // <div><h1>PhotographerBooking</h1>\
-    <>
-<div style={{paddingLeft:'60px',paddingRight:'60px', backgroundColor:'#ffff'}} >
+        <>
+        <PhotographerSidenav/>
+<div style={{paddingLeft:'60px',paddingRight:'60px', paddingTop:'70px', backgroundColor:'#ffff'}} >
     <div  >
-    <Box sx={{ bgcolor: 'black', height: '15vh' }} >
-        <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello Priyanshi!!</Typography>
+    {/* <Box sx={{ bgcolor: 'black', height: '15vh' }} >
+        <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello 
+        
+        </Typography>
         <Typography px={3} pb={2} variant="h8" color={'white'} >Hope You are doing Great!!!!</Typography>
-    </Box>
+    </Box> */}
    </div>
  <Table rowClassName={()=>'editable-row'} dataSource={bookings} bordered columns={columns} />
  </div>

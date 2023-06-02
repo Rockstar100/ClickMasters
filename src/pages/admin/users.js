@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Table } from 'antd';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 function Users() {
 
   const [user,setUser] = useState([]);
@@ -31,6 +32,26 @@ function Users() {
         console.log(error)
       }
     }
+    
+    const deleteUser = async (id) => {
+      console.log(id,"hiiii");
+      try {
+        const res = await axios.delete('http://localhost:8080/api/v1/admin/deleteUser', {
+          data: { userId: id },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          },
+          withCredentials: true
+        });
+    
+        if (res.data.success) {
+          alert('User Deleted');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
     useEffect(() => {
     getData()
   }, [])
@@ -57,7 +78,9 @@ const columns = [
     dataIndex : 'actions',
     render : (text, record) => (
       <div className='d-flex'>
-        <button className='btn btn-danger'>Delete</button>
+        
+       
+        <button onClick={()=> deleteUser(record._id)} className='btn btn-danger'> <DeleteIcon/></button>
       </div>
 
     ),
@@ -73,5 +96,6 @@ const columns = [
 
   )
 }
+
 
 export default Users
