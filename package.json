@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm i",
+    "build": "next build",
     "start": "next start",
     "server": "nodemon server.js",
     "lint": "next lint",
