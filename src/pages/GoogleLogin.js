@@ -5,9 +5,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { green } from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/router';
-import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
-import { auth, provider } from "./firebase"
-import * as firebase from 'firebase/app';
+// import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+// import { auth, provider } from "./firebase"
+// import * as firebase from 'firebase/app';
 import tw from 'tailwind-styled-components'
 
 
@@ -48,7 +48,7 @@ function Login() {
                         */}
                     </Grid>
                     {/* <Checkbox {...label} defaultChecked color="success" />Remember Me */}
-                    <br /><Button style={btnstyle} type="submit" onClick={()=> signInWithPopup(auth,provider)} variant="contained"  color="success" fullWidth>Sign In</Button>
+                    {/* <br /><Button style={btnstyle} type="submit" onClick={()=> signInWithPopup(auth,provider)} variant="contained"  color="success" fullWidth>Sign In</Button> */}
                 {/* <Typography>
                     <Link style={linkUnStyle} href='#'>Forgot Password</Link>
                 </Typography>
