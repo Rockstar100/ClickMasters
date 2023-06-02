@@ -16,13 +16,24 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/pages/Login/Login.jsx", "src/pages/Login/Login.js", "config/db.js", "src/pages/api/auth/[...nextauth].js"  ],
+    "**/*.tsx",
+    "src/pages/Login/Login.jsx",
+    "src/pages/Login/Login.js",
+    "config/db.js",
+    "src/pages/api/auth/[...nextauth].js",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

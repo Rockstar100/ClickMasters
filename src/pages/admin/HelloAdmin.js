@@ -8,7 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import { Bar } from 'react-chartjs-2';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Users from './users';
-import Photographer from './photographer';
+import Photographer from './Photographer';
 
 // import { set } from 'mongoose';
 
@@ -35,7 +35,7 @@ export default function HelloAdmin() {
             <CssBaseline />
             <Container maxWidth="xl">
                 <Box sx={{ bgcolor: 'black', height: '15vh' }} >
-                    <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello {admin}!!</Typography>
+                    <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello </Typography>
                     <Typography px={3} pb={2} variant="h8" color={'white'} >Hope You are doing Great!!!!</Typography>
                 </Box>
                 {/* <Box display="flex"> */}
