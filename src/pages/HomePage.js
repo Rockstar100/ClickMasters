@@ -1,22 +1,17 @@
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
 import React from 'react'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '../styles/Home.module.css'
 import tw from "tailwind-styled-components"
-import Map from '../components/Map'
 import Link from 'next/link'
 import { Avatar, Grid } from '@mui/material';
 import HomepageMap from './HomepageMap'
 import logo from './logo.png'
-import When from './When'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import Sidenav from './Sidenav'
-import { auth, provider } from "./firebase"
-import { onAuthStateChanged,signOut } from 'firebase/auth';
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../redux/featuers/userSlice';

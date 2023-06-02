@@ -21,7 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import Login from './Login';
-import SignUp from './SignUp';
+import SignUp from '../Components/SignUp';
 import { Avatar, Grid } from '@mui/material';
 import MyProfile from './MyProfile';
 import CloseIcon from '@mui/icons-material/Close';
