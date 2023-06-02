@@ -8,7 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import { Bar } from 'react-chartjs-2';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Users from './users';
-import Photographer from "./Photographer";
+import Allcameraman from './Allcameraman';
 
 // import { set } from 'mongoose';
 
@@ -47,7 +47,7 @@ export default function HelloAdmin() {
 
                             </ToggleButtonGroup>
                         </Box>
-                        {showPhotographer ? <Photographer /> : <Users />}
+                        {showPhotographer ? <Allcameraman /> : <Users />}
 
                     </Box>
                   

@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 // import Table from './Table';
 import { Table } from 'antd';
-function Photographer() {
+function Allcameraman() {
 
   const [user, setUser] = useState([]);
   const getData = async () => {
@@ -140,4 +140,4 @@ function Photographer() {
   )
 }
 
-export default Photographer
+export default Allcameraman
