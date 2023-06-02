@@ -34,11 +34,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect,useState } from 'react'
-import { auth, provider } from "./firebase"
+
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { onAuthStateChanged,signOut } from 'firebase/auth';
+
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import {message} from 'antd';

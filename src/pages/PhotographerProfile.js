@@ -10,8 +10,6 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { auth, provider } from "./firebase"
-import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { PhotographerDetail } from '../Data/PhotographerDetail';
 import swal from 'sweetalert';
 import Sidenav from './Sidenav'
