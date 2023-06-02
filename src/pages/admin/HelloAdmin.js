@@ -8,7 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import { Bar } from 'react-chartjs-2';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Users from './users';
-import Photographer from './Photographer';
+import Photographer from "./Photographer";
 
 // import { set } from 'mongoose';
 
