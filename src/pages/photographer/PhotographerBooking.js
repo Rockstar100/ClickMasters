@@ -3,7 +3,7 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Typography } from '@mui/material';
-import PhotographerSidenav from './PhotographerSidenav';
+import PhotographerSidenav from "./PhotographerSideNav";
 import { Table, message } from 'antd';
 import moment from 'moment';
 const PhotographerBooking = () => {
@@ -125,12 +125,7 @@ const PhotographerBooking = () => {
         <PhotographerSidenav/>
 <div style={{paddingLeft:'60px',paddingRight:'60px', paddingTop:'70px', backgroundColor:'#ffff'}} >
     <div  >
-    {/* <Box sx={{ bgcolor: 'black', height: '15vh' }} >
-        <Typography px={3} pt={2} variant="h6" color={'white'} fontWeight="bold" >Hello 
-        
-        </Typography>
-        <Typography px={3} pb={2} variant="h8" color={'white'} >Hope You are doing Great!!!!</Typography>
-    </Box> */}
+  
    </div>
  <Table rowClassName={()=>'editable-row'} dataSource={bookings} bordered columns={columns} />
  </div>
