@@ -18,17 +18,7 @@ function Login() {
   
     const router = useRouter();
     const dispatch = useDispatch();
-    // const handle = async () => {
-    //     const res = await signIn('credentials', {
-    //         redirect: false,
-    //         email: email,
-    //         password: password,
-    //     });
-    //     console.log(res)
-        
-    // }
 
-    
 
     const submitHandler = async (e)  => {
         e.preventDefault();
