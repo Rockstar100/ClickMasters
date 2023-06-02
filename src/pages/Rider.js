@@ -1,6 +1,6 @@
 import React from 'react'
 import tw from 'tailwind-styled-components'
-import {cardetail} from './cardetail'
+import cardetail from "./cardetail"
 import { useEffect,useState } from 'react'
 import { Typography } from '@mui/material'
 import { on } from 'events'
@@ -16,7 +16,7 @@ const Rider = (props ) => {
     
     useEffect(() => {
         setCar(cardetail)
-    },[])
+    },[car])
     const [selectedCar,setSelectedCar] = useState(null);
     
     const handleCarSelection = (id)=> {

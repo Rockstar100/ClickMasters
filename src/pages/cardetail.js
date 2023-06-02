@@ -1,5 +1,8 @@
 import React from 'react'
-export const cardetail =[
+export default function cardetail () {
+    [
+
+    
    
     {
         id: "Usercard",
@@ -40,3 +43,4 @@ export const cardetail =[
         
     }
 ]
+}
