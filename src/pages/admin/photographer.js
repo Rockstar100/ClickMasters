@@ -112,7 +112,7 @@ function Photographer() {
       title: 'Created At',
       dataIndex: 'createdAt'
     },
-   S
+   
     {
       title: 'Actions',
       dataIndex: 'actions',
