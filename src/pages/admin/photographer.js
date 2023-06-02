@@ -62,7 +62,7 @@ function Photographer() {
   //   }
   // }  
   const handleAccountStatus = async (record, status) => {
-   
+    
     try {
       const res = await axios.post(
         'http://localhost:8080/api/v1/admin/changeAccountStatus',
@@ -84,24 +84,6 @@ function Photographer() {
     } catch (error) {
       console.log("mera", error)
       message.error(error.response.data.message)
-    }
-  }
-  const deleteUser = async (id) => {
- 
-    try {
-      const res = await axios.delete('http://localhost:8080/api/v1/admin/deleteCameraman', {
-        data: { cameramanId: id },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        withCredentials: true
-      });
-  
-      if (res.data.success) {
-        alert('Cameraman Deleted');
-      }
-    } catch (error) {
-      console.log(error);
     }
   }
   useEffect(() => {
@@ -130,17 +112,14 @@ function Photographer() {
       title: 'Created At',
       dataIndex: 'createdAt'
     },
-    {
-     title : 'Admin',
-     dataIndex : 'isAdmin'
-    },
+   S
     {
       title: 'Actions',
       dataIndex: 'actions',
       render: (text, record) => (
         <div className='d-flex'>
           {record.status === 'pending' ? ( 
-          <CheckCircleOutlineIcon onClick={() => handleAccountStatus(record, 'approved')}/>) : (  <button onClick={()=> deleteUser(record._id)} className='btn btn-danger'> <DeleteIcon/></button>)}
+          <CheckCircleOutlineIcon onClick={() => handleAccountStatus(record, 'approved')}/>) : ( <DeleteIcon/>)}
           {/* <button className='btn btn-primary' onClick={()=>handleAccountStatus(record, 'approved')}>Accept</button>
         <button className='btn btn-danger'>Delete</button> */}
         </div>
@@ -149,7 +128,7 @@ function Photographer() {
     },
 
   ]
-
+  console.log(user);
 
   return (
     <>
