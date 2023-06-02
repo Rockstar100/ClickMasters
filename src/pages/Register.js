@@ -62,6 +62,7 @@ function Form() {
 
 
     }
+    console.log(profileimgUrl)
 
     const submitHandler = async (event) => {
 
@@ -212,7 +213,7 @@ function Form() {
                         />
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="profilepic" className="block mb-2 font-bold text-gray-700">Upload Profile Pic:</label>
+                        <label htmlFor="profilepic" className="block mb-2 font-bold text-gray-700">Upload Profile Pic:(JPG,PNG only)</label>
                         <input
                             type='file'
                             id="profilepic"
@@ -223,7 +224,7 @@ function Form() {
                         />
                     </div>
                     {/* <button type="submit" className=" bg-black" >Submit</button> */}
-                    <p className='mb-3'>Already a user?<a href='#'>Log In</a></p>
+                   
                     <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
                         Submit
                     </button>

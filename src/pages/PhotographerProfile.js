@@ -175,6 +175,8 @@ function PhotographerProfile() {
 
     // console.log(name)
 
+    console.log(data)
+
     const StyleChart = { width: '100%' }
     const GridStyle = { width: '70%' }
     
@@ -186,7 +188,7 @@ function PhotographerProfile() {
 
             <div className="flex font-sans">
                 <div className="flex-none w-48 relative">
-                    <img src={data?.image} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    <img src={data?.profilePic} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                 </div>
                 <form className="flex-auto p-6">
                     <div className="flex flex-wrap">

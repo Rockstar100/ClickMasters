@@ -119,7 +119,7 @@ const getSelectedCameramanController = async(req,res)=> {
     try{
         
         const cameraman = await cameramanModel.findOne({_id:req.body.cameramanId})
-        console.log(cameraman)
+      
         res.status(200).send({
             success : true,
             data :cameraman,

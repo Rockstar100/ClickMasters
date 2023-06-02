@@ -30,6 +30,9 @@ function photographerRegister() {
     const [showOtherDetails, setshowOtherDetails] = useState(true);
     const [TermsCondition, setTermsCondition] = useState('');
     const [userData, setUserData] = useState(null)
+    const[experience, setExperiance] = useState("")
+    const [price,Setprice] = useState("")
+
     // const dispatch = useDispatch()
     // const state = useSelector(state => state);
     const state = useSelector(state => state)
@@ -82,14 +85,16 @@ function photographerRegister() {
             email: userData.email,
             password: password,
             gender : selectedValues,
-            phoneNumber: userData.phone,
+            phone: userData.phone,
             address: userData.address,
             adharNumber: AdharNumber,
             adharFile: AdharFile,
             panNumber: PanNumber,
             panFile: PanFile,
             userId: userData._id,
-            image: userData.profie_pic,
+            profilePic: userData.profie_pic,
+            experience: experience,
+            price: price
 
         };
         try {
@@ -254,6 +259,29 @@ function photographerRegister() {
                                     required
                                 />
                             </div>
+                            <div className="mb-6">
+                                <label htmlFor="password" className="block mb-2 font-bold text-gray-700">Enter Your Experience</label>
+                                <input
+                                    type='Experiance'
+                                    id="Experiance"
+                                    value={experience}
+                                    onChange={(event) => setExperiance(event.target.value)}
+                                    className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-6">
+                                <label htmlFor="price" className="block mb-2 font-bold text-gray-700">Set Your Charges(Hourly)</label>
+                                <input
+                                    type='Experiance'
+                                    id="Experiance"
+                                    value={price}
+                                    onChange={(event) => Setprice(event.target.value)}
+                                    className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
+                                    required
+                                />
+                            </div>
+
                             <div className="mb-6">
                                 <label htmlFor="password" className="block mb-2 font-bold text-gray-700">Password:</label>
                                 <input

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
-import tw from 'tailwind-styled-components'
+import tw from 'tailwind-styled-components';
+
 import "../styles/Home.module.css"
 // import { ProfessionalPhotographer } from './api/ProfessionalPhotographer';
 import { Avatar, Grid, Paper, TextField, Button, Typography } from '@mui/material'
@@ -12,7 +13,9 @@ import { PhotographerDetail } from '../Data/PhotographerDetail';
 import swal from 'sweetalert';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { message } from 'antd'
+import { message } from 'antd';
+// import {my pic} from '../public/my pic.jpg'
+
 
 export default function Usercard() {
 
@@ -47,6 +50,7 @@ export default function Usercard() {
       console.log(error);
     }
   }
+
  
   const callAboutPage = async () => {
 
@@ -148,72 +152,69 @@ export default function Usercard() {
 
   return (
 
-    <Wrapper>
-      <Sidenav />
-      <Inside >
-        <Insider >
-          {data.map((data => (
-            <Box >
+    <div style={{padding:'30px'}}>
+      {data.map((photographer) => (
+        
+        <div className="photographer-card" key={photographer._id} style={{ border: '1px solid black', marginBottom:'10px', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '30px', paddingRight: '30px' }}>
+          <img className="avatar" src={photographer?.profilePic}  alt="Photographer Avatar" />
 
-              {/* <div class="grid-cols-1 lg:col-span-3 items-center justify-center ">
-        <div class="mx-auto flex h-[90px] w-[90px] items-center justify-center rounded-full bg-black-100 p-4"> */}
-              <Avatar sx={{ width: 100, height: 100 }} src={data?.image}></Avatar>
-              {/* </div>
-      </div> */}
+          <div className="details">
+            <h2 className="text-2xl font-bold text-zinc-700">{photographer.name}</h2>
+            <p className="mt-2 font-semibold text-zinc-700">{photographer.address.state}</p>
+            <p className="mt-4 text-zinc-500">{photographer.description}</p>
+          </div>
 
-              <div class="col-span-1 lg:col-span-9">
-                <div class="text-center lg:text-left">
-                  <h2 class="text-2xl font-bold text-zinc-700">{data.name}</h2>
-                  <p class="mt-2 font-semibold text-zinc-700">{data.address.state}</p>
-                  <p class="mt-4 text-zinc-500">{data.description}</p>
-                </div>
+          <div className="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left">
+            <div>
+              <p className="font-bold text-zinc-700">{photographer.experience}</p>
+              <p className="text-sm font-semibold text-zinc-700">Experience</p>
+            </div>
 
-                <div class="mt-6 grid grid-cols-3 gap-6 text-center lg:text-left">
-                  <div>
-                    <p class="font-bold text-zinc-700">{data.experience}</p>
-                    <p class="text-sm font-semibold text-zinc-700">Experience</p>
-                  </div>
+            <div>
+              <p className="font-bold text-zinc-700">{photographer.rating}</p>
+              <p className="text-sm font-semibold text-zinc-700">Ratings</p>
+            </div>
 
-                  <div>
-                    <p class="font-bold text-zinc-700">{data.rating}</p>
-                    <p class="text-sm font-semibold text-zinc-700">Ratings</p>
-                  </div>
+            <div>
+              <p className="font-bold text-zinc-700">{photographer.price}/h</p>
+              <p className="text-sm font-semibold text-zinc-700">Price</p>
+            </div>
+          </div>
 
-                  <div>
-                    <p class="font-bold text-zinc-700">{data.price}/h</p>
-                    <p class="text-sm font-semibold text-zinc-700">Price</p>
-                  </div>
-                </div>
-
-                <div class="mt-6 grid grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-2 gap-4">
+            {/* <button className="hire-button" onClick={() => handleBooking(photographer._id)}>Hire</button>
+            {/* <Link> */}
+              {/* <button className="profile-button">View Profile</button> */}
+            {/* </Link> */} 
+            <div class="mt-6 grid grid-cols-2 gap-4">
                   <Buttons onClick={() => { handleBooking(data._id) }}
                   >Hire</Buttons>
                   <Link
-                    href={{
-                      pathname: "/PhotographerProfile",
-                      query: {
-                        id: data._id,
-                        startdate: detail.sdate,
-                        enddate: detail.edate,
-                        eventType: detail.detail,
-                        Address: detail.pick,
+                   href={`/PhotographerProfile?id=${photographer._id}&startdate=${detail.sdate}&enddate=${detail.edate}&eventType=${detail.detail}&Address=${detail.pick}`}
+                    // href={{
+                    //   pathname: "/PhotographerProfile",
+                    //   query: {
+                    //     id: data._id,
+                    //     startdate: detail.sdate,
+                    //     enddate: detail.edate,
+                    //     eventType: detail.detail,
+                    //     Address: detail.pick,
 
-                        // drop: drop
+                    //     // drop: drop
 
-                      }
-                    }}
+                    //   }
+                    // }}
                   >
-                    <Buttons  >View Profile</Buttons>      </Link>
+                    <Buttons 
+
+                     style={{backgroundColor:'black', color:'white'}} >View Profile</Buttons>      </Link>
 
 
                 </div>
-              </div>
-
-            </Box>
-          )))}
-        </Insider>
-      </Inside>
-    </Wrapper>
+          </div>
+        </div>
+      ))}
+    </div>
 
   );
 }

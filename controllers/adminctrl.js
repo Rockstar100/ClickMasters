@@ -90,8 +90,55 @@ const changeAccountStatusController = async (req, res) => {
       });
     }
   };
+  const deleteUserController = async (req, res) => {
+    const {userId} = req.body;
+    
+    try {
+      const user = await userModel.findByIdAndDelete(userId);
+
+
+      res.status(201).send({
+        success: true,
+        message: "Deleted user",
+      });
+      
+
+      
+    }
+    catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "error while fetching cameraman",
+        error,
+      });
+    }
+  }
+
+  const deleteCameramanController = async (req, res) => {
+    const {cameramanId} = req.body;
+    try{
+      const cameraman = await cameramanModel.findByIdAndDelete(cameramanId);
+      res.status(201).send({
+        success: true,
+        message: "Deleted cameraman",
+      });
+
+    }
+    catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "error while fetching cameraman",
+        error,
+      });
+
+  }
+}
 module.exports = { 
     getAllUsersController,
     getAllCameraman,
-    changeAccountStatusController
+    changeAccountStatusController,
+    deleteUserController,
+    deleteCameramanController
 }
