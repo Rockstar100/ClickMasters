@@ -1,6 +1,6 @@
 import * as React from 'react';
 import tw from 'tailwind-styled-components'
-import Userlist from './userlist';
+// import Userlist from './userlist';
 import { useEffect,useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -37,7 +37,9 @@ export default function Gridlist() {
       
         <Grid container item spacing={3}>
         <Grid item xs={4}>
-        <Item><Userlist/></Item>
+        <Item>
+          {/* <Userlist/> */}
+        </Item>
       </Grid>
        
         </Grid>
