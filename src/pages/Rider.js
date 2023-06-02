@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import carDetail from "./cardetail";
+import CardDetal from "./CardDetal";
 import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { on } from 'events';
@@ -13,7 +13,7 @@ const Rider = (props) => {
   const [car, setCar] = useState([]);
 
   useEffect(() => {
-    setCar(carDetail);
+    setCar(CardDetal);
   }, []);
 
   const [selectedCar, setSelectedCar] = useState(null);
@@ -35,14 +35,14 @@ const Rider = (props) => {
     <Wrapper>
       <Title>select your Event</Title>
       <CarList>
-        {carDetail.map((carDetail) => (
+        {CardDetal.map((CardDetal) => (
           <Car
             key={carDetail.id}
-            onClick={() => handleCarSelection(carDetail.title)}
+            onClick={() => handleCarSelection(CardDetal.title)}
           >
-            <CarImg src={carDetail.image} />
+            <CarImg src={CardDetal.image} />
             <CarDetails>
-              <Service>{carDetail.title}</Service>
+              <Service>{CardDetal.title}</Service>
               <Price>Rs 52.00</Price>
             </CarDetails>
           </Car>
