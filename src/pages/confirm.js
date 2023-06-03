@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { useEffect, useState } from 'react';
 import MapComponent from '../Components/Map';
 import { useRouter } from 'next/router';
 import Rider from './Rider';
@@ -9,16 +8,12 @@ import Link from 'next/link';
 const Confirm = () => {
   const router = useRouter();
 
-  const { pick } = router.query;
-  const { sdate } = router.query;
-  const { edate } = router.query;
-
+  const { pick, sdate, edate } = router.query;
   const [pickup, setPickup] = useState();
 
   const getPickupCoordinates = (pick) => {
-    const pickup = pick;
     fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` +
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${pick}.json?` +
         new URLSearchParams({
           access_token:
             'pk.eyJ1IjoicGFydmVlbjIzIiwiYSI6ImNsZ254a29rMDAwaGgzaW1yaWJwMWJ6Mm4ifQ.3VxAjPvVhzv24X-pHvCG_g',
@@ -28,18 +23,23 @@ const Confirm = () => {
       .then((data) => {
         const coordinates = data.features[0].center;
         setPickup(coordinates);
+      })
+      .catch((error) => {
+        console.error('Error fetching pickup coordinates:', error);
       });
   };
 
   useEffect(() => {
-    getPickupCoordinates(pick);
+    if (pick) {
+      getPickupCoordinates(pick);
+    }
   }, [pick]);
 
   return (
     <Wrapper>
       <ButtonContainer>
         <Link href="/">
-          <BacKButton src="https://img.icon8.com/ios-filled/50/000000/left.png" />
+          <BacKButton src="https://img.icon8.com/ios-filled/50/000000/left.png" alt="Back" />
         </Link>
       </ButtonContainer>
       <MapComponent pickup={pickup} />
@@ -53,7 +53,7 @@ const Confirm = () => {
 export default Confirm;
 
 const RideContainer = tw.div`
-  fex-1 flex flex-col h-1/2
+  flex-1 flex flex-col h-1/2
 `;
 const Wrapper = tw.div`
   flex flex-col h-screen

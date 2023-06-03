@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const userModel = require('../models/userModels');
-const { loginController, registerController, authController,applyCameraman,getAllNotificationController,updateController,getAllCameramanController,bookCameramanController, bookingavilabilityController,userBookingsController} = require('../controllers/userCtrl');
+const { loginController, registerController, authController,applyCameraman,getAllNotificationController,updateController,getAllCameramanController,bookCameramanController, bookingavilabilityController,userBookingsController,cardData} = require('../controllers/userCtrl');
 const authMiddleware = require('../middlewares/authMiddleware');
 const { getAllCameraman } = require('../controllers/adminctrl');
 const { use } = require('react');
@@ -37,6 +37,8 @@ router.post('/bookCameraman', authMiddleware, bookCameramanController )
 router.post('/booking-avilability', authMiddleware, bookingavilabilityController )
 
 router.get('/user-bookings', authMiddleware,userBookingsController )
+
+router.get('/cardData', cardData)
 
 // router.get('/path', async (req, res) => {
 //     try {
