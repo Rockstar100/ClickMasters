@@ -7,7 +7,7 @@ const booking = () => {
     const[bookings,setBookings]=useState([])
     const Bookings = async () => {
         try{
-            const res = await axios.get("http://localhost:8080/api/v1/users/user-bookings", {
+            const res = await axios.get("https://click-master.onrender.com/api/v1/users/user-bookings", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token'),
                 },

@@ -29,7 +29,7 @@ function SignUp() {
     const [name, setname] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [gender, setGender] = React.useState('female');
-    // proxy = "http://localhost:8080"
+    // proxy = "https://click-master.onrender.com"
     // const values = {
     //     email: email,
     //     password: password,
@@ -53,7 +53,7 @@ function SignUp() {
         try{
 
             dispatch(showLoading());
-            const res = await axios.post('http://localhost:8080/api/v1/users/register', values)
+            const res = await axios.post('https://click-master.onrender.com/api/v1/users/register', values)
             dispatch(hideLoading());
            
             if(res.data.success){

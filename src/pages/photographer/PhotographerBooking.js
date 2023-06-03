@@ -11,7 +11,7 @@ const PhotographerBooking = () => {
     const[bookings,setBookings]=useState([])
     const Bookings = async () => {
         try{
-            const res = await axios.get("http://localhost:8080/api/v1/cameraman/cameraman-bookings", 
+            const res = await axios.get("https://click-master.onrender.com/api/v1/cameraman/cameraman-bookings", 
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token'),
@@ -36,7 +36,7 @@ const PhotographerBooking = () => {
     const handleAccept = async (record, status) => {
         
         try{
-            const res = await axios.post("http://localhost:8080/api/v1/cameraman/update-status", {
+            const res = await axios.post("https://click-master.onrender.com/api/v1/cameraman/update-status", {
                 bookingId:record._id,
                 status
         }

@@ -39,7 +39,7 @@ function photographerRegister() {
     const callAboutPage = async () => {
 
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            const res = await axios.post('https://click-master.onrender.com/api/v1/users/getUserData',
             { token: localStorage.getItem('token') },
              {
                  headers: {
@@ -100,7 +100,7 @@ function photographerRegister() {
         try {
 
             dispatch(showLoading());
-            const res = await axios.post('http://localhost:8080/api/v1/users/apply-cameraman', { ...values})
+            const res = await axios.post('https://click-master.onrender.com/api/v1/users/apply-cameraman', { ...values})
             dispatch(hideLoading());
           
             if (res.data.success) {
