@@ -35,10 +35,10 @@ const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors({
-     origin: 'https://click-master.onrender.com',
+     origin: 'https://main--clickmaster.netlify.app/',
      methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
-    
+
  }));
 
 app.get ('/', (req, res) => {
