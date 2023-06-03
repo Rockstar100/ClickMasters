@@ -34,7 +34,8 @@ connectDB();
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors({ origin: 'https://main--clickmaster.netlify.app/Login',
+app.use(cors({
+     origin: 'https://main--clickmaster.netlify.app/',
 credentials: true
  }));
 
