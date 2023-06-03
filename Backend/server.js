@@ -46,6 +46,9 @@ app.get ('/', (req, res) => {
 app.use('/api/v1/users', require('./routes/userRoutes'));
 app.use('/api/v1/admin', require('./routes/adminRoutes'))
 app.use('/api/v1/cameraman', require('./routes/cameramanRoutes'))
+
+
+
 // app.post('/api/v1/users/getUserData', (req, res) => {
 //     console.log(req.body)
 //     res.send({ success: true, data: { name: 'Parveen Jaiswal', email: ' '

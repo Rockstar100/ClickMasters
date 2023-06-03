@@ -1,6 +1,7 @@
 const userModel = require('../models/userModels');
 const cameramanModel = require('../models/cameramanModel')
 const bookingModel = require('../models/bookingModel')
+const cardModel = require('../models/cardModel')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const colors = require('colors');
@@ -361,6 +362,24 @@ const userBookingsController = async(req,res)=> {
             })
     }
 }
+const cardData = async(req,res)=> {
+    try{
+        const cards = await cardModel.find({})
+       
+        res.status(200).send({
+            success : true,
+            data : cards,
+            message : "Cards fetched successfully",
+            })
+        }
+    catch(error){
+        console.log(error)
+        res.status(500).send({
+            success : false,
+        }
+        )
+    }
+}
 
 
 
@@ -374,6 +393,7 @@ module.exports = {
     getAllCameramanController,
     bookCameramanController,
     bookingavilabilityController,
-    userBookingsController
+    userBookingsController,
+    cardData
   
 }
