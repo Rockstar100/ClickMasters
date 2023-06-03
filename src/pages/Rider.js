@@ -18,7 +18,7 @@ const Rider = (props) => {
  
     try {
 
-        const res = await axios.get('http://localhost:8080/api/v1/users/cardData'
+        const res = await axios.get('https://click-master.onrender.com/api/v1/users/cardData'
 
         );
         console.log(res.data.data)

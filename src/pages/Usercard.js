@@ -33,7 +33,7 @@ export default function Usercard() {
 
   const getAllCamerman = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/users/getAllCameraman',
+      const res = await axios.get('https://click-master.onrender.com/api/v1/users/getAllCameraman',
 
         {
           headers: {
@@ -55,7 +55,7 @@ export default function Usercard() {
   const callAboutPage = async () => {
 
     try {
-      const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+      const res = await axios.post('https://click-master.onrender.com/api/v1/users/getUserData',
         { token: localStorage.getItem('token') },
         {
           headers: {
@@ -88,7 +88,7 @@ export default function Usercard() {
   }, [])
   const handleBooking = async (id) => {
     try {
-      const resp = await axios.post("http://localhost:8080/api/v1/cameraman/getSelectedCameraman", {
+      const resp = await axios.post("https://click-master.onrender.com/api/v1/cameraman/getSelectedCameraman", {
         cameramanId: id
       }, {
         headers: {
@@ -102,7 +102,7 @@ export default function Usercard() {
         throw new Error("Error while hiring");
       }
   
-      const res = await axios.post("http://localhost:8080/api/v1/users/bookCameraman", {
+      const res = await axios.post("https://click-master.onrender.com/api/v1/users/bookCameraman", {
         cameramanId: id,
         userId: user._id,
         cameramanInfo: datas,

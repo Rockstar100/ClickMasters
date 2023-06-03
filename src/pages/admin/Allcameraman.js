@@ -11,7 +11,7 @@ function Allcameraman() {
   const getData = async () => {
     try {
       const res = await axios.get(
-        'http://localhost:8080/api/v1/admin/getAllCameraman',
+        'https://click-master.onrender.com/api/v1/admin/getAllCameraman',
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -38,7 +38,7 @@ function Allcameraman() {
 
   //   try {
   //     const res = await axios.post(
-  //       'http://localhost:8080/api/v1/admin/changeAccountStatus',
+  //       'https://click-master.onrender.com/api/v1/admin/changeAccountStatus',
   //       {
   //         cameramanid: record._id, status: status
   //       },
@@ -65,7 +65,7 @@ function Allcameraman() {
     
     try {
       const res = await axios.post(
-        'http://localhost:8080/api/v1/admin/changeAccountStatus',
+        'https://click-master.onrender.com/api/v1/admin/changeAccountStatus',
 
         {
           cameramanid: record._id, userId: record.userId, status: status

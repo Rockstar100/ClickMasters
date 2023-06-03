@@ -10,7 +10,7 @@ function UserDetail() {
     const getData = async () => {
       try {
         const res = await axios.get(
-          'http://localhost:8080/api/v1/admin/getAllUsers',
+          'https://click-master.onrender.com/api/v1/admin/getAllUsers',
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -36,7 +36,7 @@ function UserDetail() {
     const deleteUser = async (id) => {
       console.log(id,"hiiii");
       try {
-        const res = await axios.delete('http://localhost:8080/api/v1/admin/deleteUser', {
+        const res = await axios.delete('https://click-master.onrender.com/api/v1/admin/deleteUser', {
           data: { userId: id },
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
