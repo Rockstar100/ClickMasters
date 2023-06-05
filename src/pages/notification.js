@@ -21,7 +21,7 @@ export default function Userlist() {
   const callAboutPage = async () => {
 
     try {
-        const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+        const res = await axios.post('https://click-master.onrender.com/api/v1/users/getUserData',
             { token: localStorage.getItem('token') },
             {
                 headers: {

@@ -53,7 +53,7 @@ function SignUp() {
         try{
 
             dispatch(showLoading());
-            const res = await axios.post('http://localhost:8080/api/v1/users/register', values)
+            const res = await axios.post('https://click-master.onrender.com/api/v1/users/register', values)
             dispatch(hideLoading());
            
             if(res.data.success){

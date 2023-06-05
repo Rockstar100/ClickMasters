@@ -66,7 +66,7 @@ export default function Checkout() {
 const handler = async(values)=>{
 
   try{
-   const res = await axios.post('http://localhost:8080/api/v1/apply-cameraman',{...values,userId : user._id},{
+   const res = await axios.post('https://click-master.onrender.com/api/v1/apply-cameraman',{...values,userId : user._id},{
     headers: {
         Authorization: "Bearer " + localStorage.getItem('token'),
     },

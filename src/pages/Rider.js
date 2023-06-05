@@ -1,20 +1,46 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
-import carDetail from "./cardetail";
+
 import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { on } from 'events';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Rider = (props) => {
+
   const router = useRouter();
   const [car, setCar] = useState([]);
+    const [data, setData] = useState([])
+  const getCard = async () => {
+ 
+    try {
 
-  useEffect(() => {
-    setCar(carDetail);
-  }, []);
+        const res = await axios.get('https://click-master.onrender.com/api/v1/users/cardData'
+
+        );
+        console.log(res.data.data)
+        if(res.data.success){
+          setData(res.data.data)
+        
+      }
+      
+  } 
+   catch (error) {
+     
+      console.log(error);
+
+  }
+ 
+};
+useEffect(() => {
+   
+    getCard();
+  
+}, [])
+
 
   const [selectedCar, setSelectedCar] = useState(null);
 
@@ -35,14 +61,14 @@ const Rider = (props) => {
     <Wrapper>
       <Title>select your Event</Title>
       <CarList>
-        {carDetail.map((carDetail) => (
+        {data.map((data) => (
           <Car
-            key={carDetail.id}
-            onClick={() => handleCarSelection(carDetail.title)}
+            key={data?._id}
+            onClick={() => handleCarSelection(data?.title)}
           >
-            <CarImg src={carDetail.image} />
+            <CarImg src={data.image} />
             <CarDetails>
-              <Service>{carDetail.title}</Service>
+              <Service>{data.title}</Service>
               <Price>Rs 52.00</Price>
             </CarDetails>
           </Car>
