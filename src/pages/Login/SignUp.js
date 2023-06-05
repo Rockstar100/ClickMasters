@@ -29,7 +29,7 @@ function SignUp() {
     const [name, setname] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [gender, setGender] = React.useState('female');
-    // proxy = "http://localhost:8080"
+    // proxy = "https://click-master.onrender.com"
     // const values = {
     //     email: email,
     //     password: password,
