@@ -8,7 +8,7 @@
     "start": "nodemon server.js",
     "server": "nodemon server.js",
     "lint": "next lint",
-    "proxy": "http://localhost:8080"
+    "proxy": "https://click-master.onrender.com/"
   },
   "dependencies": {
 
@@ -62,14 +62,14 @@
     "port": "8080",
     "proxy": {
       "/api/**": {
-        "target": "http://localhost:8080",
+        "target": "https://click-master.onrender.com/",
         "secure": false
       }
     }
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "next.config.js",
-  "proxy": "http://localhost:8080",
+  "proxy": "https://click-master.onrender.com/",
   "author": "",
   "license": "ISC"
 }

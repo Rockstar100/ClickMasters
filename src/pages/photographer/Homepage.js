@@ -9,7 +9,7 @@ const Homepage = () => {
     const callAboutPage = async () => {
  
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/cameraman/getData',
+            const res = await axios.post('https://click-master.onrender.com/api/v1/cameraman/getData',
             { token: localStorage.getItem('token') },
              {
                  headers: {

@@ -36,7 +36,7 @@ function PhotographerProfile() {
    
     const getSelectedCamerman = async () => {
         try {
-          const res = await axios.post("http://localhost:8080/api/v1/cameraman/getSelectedCameraman",
+          const res = await axios.post("https://click-master.onrender.com/api/v1/cameraman/getSelectedCameraman",
           {cameramanId:id},
          {
               headers: {
@@ -57,7 +57,7 @@ function PhotographerProfile() {
       const callAboutPage = async () => {
  
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/users/getUserData',
+            const res = await axios.post('https://click-master.onrender.com/api/v1/users/getUserData',
             { token: localStorage.getItem('token') },
              {
                  headers: {
@@ -81,7 +81,7 @@ function PhotographerProfile() {
     };
     const handleAvailable = async () => {
         try {
-          const res = await axios.post("http://localhost:8080/api/v1/users/booking-avilability", {
+          const res = await axios.post("https://click-master.onrender.com/api/v1/users/booking-avilability", {
             cameramanId: query.cameramanId,
             date, Time
           }, {
@@ -119,7 +119,7 @@ function PhotographerProfile() {
         setIsAvailable(true)
         // if(!date && !Time){
         //   return alert("Please select date and time")}
-        const res = await axios.post("http://localhost:8080/api/v1/users/bookCameraman", 
+        const res = await axios.post("https://click-master.onrender.com/api/v1/users/bookCameraman", 
         {cameramanId: id,
           userId: user._id,
           cameramanInfo: data,
