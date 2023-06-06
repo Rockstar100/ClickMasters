@@ -15,7 +15,7 @@ function UserDetail() {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`
             },
-            withCredentials: true
+            // withCredentials: true
           }
         );
          
@@ -41,7 +41,7 @@ function UserDetail() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           },
-          withCredentials: true
+          // withCredentials: true
         });
     
         if (res.data.success) {

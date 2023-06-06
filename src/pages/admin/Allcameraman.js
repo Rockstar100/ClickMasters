@@ -15,8 +15,9 @@ function Allcameraman() {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
+            
           },
-          withCredentials: true
+          // withCredentials: true
         }
       );
 
