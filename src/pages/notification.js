@@ -27,7 +27,7 @@ export default function Userlist() {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token'),
                 },
-                credentials: 'include'
+                // credentials: 'include'
             });
         console.log("notifiaction card", res.data.data)
         if (res.data.success) {
