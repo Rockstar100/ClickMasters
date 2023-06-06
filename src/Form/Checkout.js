@@ -70,7 +70,7 @@ const handler = async(values)=>{
     headers: {
         Authorization: "Bearer " + localStorage.getItem('token'),
     },
-    credentials: 'include'
+    // credentials: 'include'
    }) 
     if(res.data.success){
       message.success(res.data.message)
