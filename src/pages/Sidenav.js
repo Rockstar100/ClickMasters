@@ -132,7 +132,7 @@ const callAboutPage = async () => {
              headers: {
                 Authorization: "Bearer " + localStorage.getItem('token'),
             },
-            credentials: 'include'
+            // credentials: 'include'
         });
       
         if(res.data.success){
