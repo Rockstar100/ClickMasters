@@ -86,7 +86,9 @@ export default function Usercard() {
     
 
   }, [])
+  
   const handleBooking = async (id) => {
+    console.log(id)
     try {
       const resp = await axios.post("https://click-master.onrender.com/api/v1/cameraman/getSelectedCameraman", {
         cameramanId: id
@@ -187,8 +189,10 @@ export default function Usercard() {
               {/* <button className="profile-button">View Profile</button> */}
             {/* </Link> */} 
             <div class="mt-6 grid grid-cols-2 gap-4">
-                  <Buttons onClick={() => { handleBooking(data._id) }}
-                  >Hire</Buttons>
+                  {/* <Buttons onClick={() => { handleBooking(data._id) }} */}
+                  <Buttons onClick={() => handleBooking(photographer._id)}>Hire</Buttons>
+ 
+                  {/* >Hire</Buttons> */}
                   <Link
                    href={`/PhotographerProfile?id=${photographer._id}&startdate=${detail.sdate}&enddate=${detail.edate}&eventType=${detail.detail}&Address=${detail.pick}`}
                     // href={{
