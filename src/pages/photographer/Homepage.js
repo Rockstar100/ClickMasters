@@ -1,11 +1,14 @@
 import React,{useEffect,useState} from 'react';
 import axios from 'axios';
 import PhotographerSideNav from './PhotographerSideNav';
-
+import Calender from './Calender';
+import PhotographerBooking from './PhotographerBooking';
 
 const Homepage = () => {
     const [userData, setUserData] = useState();
 
+
+    
     const callAboutPage = async () => {
  
         try {
@@ -36,7 +39,9 @@ const Homepage = () => {
       }
      
     };
-       
+   
+    
+  
 
   
   
@@ -46,11 +51,19 @@ const Homepage = () => {
             callAboutPage();
         
     }, [])
+    console.log(userData)
 
 
   return (
-<><PhotographerSideNav/>
-hello</>
+<>
+{/* <PhotographerSideNav/> */}
+{/* hello */}
+<PhotographerBooking/>
+
+{/* <Calender data={userData?.notification}/> */}
+
+
+</>
   )
 }
 
