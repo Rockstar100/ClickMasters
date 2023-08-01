@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import img from './f2.jpg';
-import logo from './logo.png';
-import Image from 'next/image'
-import axios from 'axios'
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
-import { useDispatch } from 'react-redux'
-import { showLoading, hideLoading } from '../redux/featuers/alertSlice'
+import { useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../redux/featuers/alertSlice';
+import Image from 'next/image';
+import img from './f2.jpg';
+import logo from './logo.png';
+// import bg_img from './bg-Login.jpg';
+import bg_img from './BG_Gif.gif';
+
 function Form() {
     const [Name, setName] = useState('');
     const [Address, setAddress] = useState({
@@ -110,41 +113,26 @@ function Form() {
 
     };
 
+  return (
+    <div className="flex justify-end items-center min-h-screen " style={{ backgroundImage: `url(${bg_img.src})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat',paddingRight:'100px' }}>  
+        <div className="border-2 border-black mt-5">
+        <div className="grid p-5 ">
+        
+       
 
-    return (
-        <div className="grid grid-cols-2 gap-4 border-t-4 p-20 border-black-900 shadow-xl" >
-            <div>
-                {/* <img src={img} style={{width:'50vw'}}/></div> */}
-                <Image
-                    src={img} alt="Image"
-
-                /></div>
-
-            <div>
-                <Image
-                    className='mx-auto items-center'
-                    src={imgpreview || logo}
-                    alt="logo"
-
-                    width={200} height={200}
+            <form onSubmit={submitHandler} className="max-w-lg mx-auto mb-8 bg-white p-5" style={{width: "100%" , marginRight:'200px'}} >
+              <div className="mb-4">
+                <label htmlFor="first-name" className="block mb-2 font-bold text-gray-700"> Name:</label>
+                <input
+                  type="text"
+                  id="first-name"
+                  value={Name}
+                  onChange={(event) => setName(event.target.value)}
+                  className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
+                  required
                 />
-                {/* <img  src={logo} style={{height:'20vh ', marginTop:'-90px'}}/> */}
-
-                <form onSubmit={submitHandler} className="max-w-lg mx-auto mb-8 	">
-                    <div className="mb-4"></div>
-                    <div className="mb-4">
-                        <label htmlFor="first-name" className="block mb-2 font-bold text-gray-700"> Name:</label>
-                        <input
-                            type="text"
-                            id="first-name"
-                            value={Name}
-                            onChange={(event) => setName(event.target.value)}
-                            className="w-full px-3 py-2 border rounded-md outline-none focus:ring-2 focus:ring-black-500"
-                            required
-                        />
-                    </div>
-
-                    <div className="mb-4">
+              </div>
+              <div className="mb-4">
                         <label htmlFor="email" className="block mb-2 font-bold text-gray-700">Email:</label>
                         <input
                             type="email"
@@ -223,16 +211,15 @@ function Form() {
                             required
                         />
                     </div>
-                    {/* <button type="submit" className=" bg-black" >Submit</button> */}
-                   
-                    <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600  focus:outline-none focus:ring-2 focus:ring-black-500">
-                        Submit
-                    </button>
-
-
-                </form></div>
+              <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-black-600 focus:outline-none focus:ring-2 focus:ring-black-500">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-    );
+    
+    </div>
+  );
 }
 
 export default Form;

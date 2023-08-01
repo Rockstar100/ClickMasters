@@ -50,11 +50,11 @@ export default function HomePage() {
       
       <Header>
         
-        <UberLogo src= "https://theuniques.in//images/clickmasterslogo.png" />
+        {/* <UberLogo src= "https://theuniques.in//images/clickmasterslogo.png" /> */}
         <Profile>
       
-          <Name>{users.user?.name}</Name>
-          <Avatar sx={{ width: 80, height: 80 }} src ={users?.user?.profie_pic}></Avatar>
+       
+          <Avatar sx={{ width: 80, height: 80 }} style={{margin:"20px"}} src ={users?.user?.profie_pic}></Avatar>   <Name>{users.user?.name}</Name>
 
           {/* <UserImage
           src={user && user.photoUrl}

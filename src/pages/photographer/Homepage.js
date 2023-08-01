@@ -24,6 +24,7 @@ const Homepage = () => {
             if(res.data.success){
           
               setUserData(res.data.data)
+              console.log(userData)
               
           }
           else{
@@ -55,15 +56,11 @@ const Homepage = () => {
 
 
   return (
-<>
-{/* <PhotographerSideNav/> */}
-{/* hello */}
-<PhotographerBooking/>
-
-{/* <Calender data={userData?.notification}/> */}
+<><PhotographerSideNav/>
 
 
-</>
+
+hello</>
   )
 }
 
