@@ -33,7 +33,7 @@
     "config/db.js",
     "src/pages/api/auth/[...nextauth].js",
     ".next/types/**/*.ts"
-  ],
+, "src/pages/photographer/Calender.jsx"  ],
   "exclude": [
     "node_modules"
   ]
