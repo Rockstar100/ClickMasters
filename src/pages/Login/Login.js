@@ -59,7 +59,7 @@ function Login() {
                 <h2 className="text-center text-2xl font-bold">Login</h2>
 
                 <form onSubmit={submitHandler}>
-                    <label htmlFor="email" style={labelStyle}>Email:</label>
+                    <label htmlFor="email" style={labelStyle}>Emails:</label>
                     <input className='rounded-md bg-gray-100 shadow-lg' type="email" value={email} onChange={e => setEmail(e.target.value)} id="email" name="email" style={inputStyle} />
 
                     <label htmlFor="password" style={labelStyle}>Password:</label>
