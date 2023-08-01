@@ -2,6 +2,8 @@ import React,{useEffect,useState} from 'react';
 import axios from 'axios';
 import PhotographerSideNav from './PhotographerSideNav';
 
+import PhotographerBooking from './PhotographerBooking';
+
 
 const Homepage = () => {
     const [userData, setUserData] = useState();
@@ -21,6 +23,7 @@ const Homepage = () => {
             if(res.data.success){
           
               setUserData(res.data.data)
+              console.log(userData)
               
           }
           else{
@@ -50,6 +53,9 @@ const Homepage = () => {
 
   return (
 <><PhotographerSideNav/>
+
+
+
 hello</>
   )
 }

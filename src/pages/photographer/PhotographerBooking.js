@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import { Typography } from '@mui/material';
 import PhotographerSidenav from "./PhotographerSideNav";
 import { Table, message } from 'antd';
+import Calender from './Calender';
 import moment from 'moment';
 const PhotographerBooking = () => {
     const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ const PhotographerBooking = () => {
             console.log(error)
         }
     }
-   
+   console.log("booking",bookings)
     useEffect(() => {
         Bookings()
     }, [])
@@ -119,13 +120,14 @@ const PhotographerBooking = () => {
         }
         
     ] 
+    console.log(columns)
   return (
     // <div><h1>PhotographerBooking</h1>\
         <>
-        <PhotographerSidenav/>
+        {/* <PhotographerSidenav/> */}
 <div style={{paddingLeft:'60px',paddingRight:'60px', paddingTop:'70px', backgroundColor:'#ffff'}} >
     <div  >
-  
+    <Calender data={bookings}/>
    </div>
  <Table rowClassName={()=>'editable-row'} dataSource={bookings} bordered columns={columns} />
  </div>
@@ -134,8 +136,3 @@ const PhotographerBooking = () => {
 }
 
 export default PhotographerBooking
-
-
-
-
-

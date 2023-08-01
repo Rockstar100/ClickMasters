@@ -34,7 +34,7 @@ function SignUp() {
                     <TextField style={marginbottom} id="filled-basic" label="Enter Username" variant="filled" color="success" fullWidth required />
                   
                     <FormControl style={marginbottom}>
-                        <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                        <FormLabel id="demo-controlled-radio-buttons-group">Geggnder</FormLabel>
                         <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
