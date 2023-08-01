@@ -277,14 +277,16 @@ const bookCameramanController = async(req,res)=> {
         req.body.time = moment(req.body.time, "HH:mm").toISOString()
         req.body.status = "pending"
         const newBooking = new bookingModel(req.body)
-        await newBooking.save()
+          await newBooking.save()
         const user = await userModel.findOne({_id:req.body.userId});
         const cameraman = await cameramanModel.findOne({_id:req.body.cameramanId});
+
         const notification = cameraman.notification
         notification.push({
             type: "Booking Request",
             message: `New booking Request from ${req.body.userInfo.name}`,
             data: user,
+            book: newBooking,
             onclickPath: "/user/booking",
           })
             await cameraman.save()

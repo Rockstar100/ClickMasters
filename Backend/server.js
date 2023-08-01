@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
@@ -12,6 +11,7 @@ const ObjectId = require('mongodb').ObjectId;
 dotenv.config();
 
 //connect to database
+
 const db = 'mongodb+srv://parveenjaiswal100:root123@clickmaster.oveswat.mongodb.net/Photographer'
 const connectDB = async () => {
     try{
