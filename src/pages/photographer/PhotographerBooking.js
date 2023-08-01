@@ -136,8 +136,3 @@ const PhotographerBooking = () => {
 }
 
 export default PhotographerBooking
-
-
-
-
-

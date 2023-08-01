@@ -8,7 +8,8 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import {useDispatch} from 'react-redux'
 import {signIn} from 'next-auth/react'
-import {showLoading, hideLoading} from '../../redux/featuers/alertSlice'
+import {showLoading, hideLoading} from '../../redux/featuers/alertSlice';
+import login_png from "./clickmaster.png";
 function Login() {
    
 
@@ -65,8 +66,11 @@ function Login() {
     const btnStyle = { margin: '20px auto', backgroundColor: 'black', color: 'white', padding: '5px 10px' };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <div className="bg-white rounded-md shadow-lg" style={paperStyle}>
+        <div className="flex flex-row items-center justify-center  h-screen " style={{backgroundColor:"white"}}>
+        
+            <div style={{borderRight:"2px solid rgb(128, 128, 128)", marginRight:"10px" }}><img src={login_png.src} alt='camera man png' width={'400px'} /></div>
+            
+            <div className="bg-white rounded-md " style={paperStyle}>
                 <h2 className="text-center text-2xl font-bold">Login</h2>
 
                 <form onSubmit={submitHandler}>
