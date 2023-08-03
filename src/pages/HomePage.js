@@ -97,13 +97,7 @@ export default function HomePage() {
       </Help>
       </ActionButtons>
       </MapWrapper>
-    {/* 
-      
-      
-      
-    </ActionItems>  */}
-    
-      {/* <InputButtons>Where To?</InputButtons> */}
+
     
   
    </Wrapper>
