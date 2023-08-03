@@ -188,12 +188,12 @@ export default function PersistentDrawerLeft() {
   );
 
   return (
-    <Box sx={{ display: "flex", margin: "-3%" }} disable>
+    <Box sx={{ display: "flex", margin: "-3%"  }} disable>
       <CssBaseline />
       <AppBar position="fixed" open={open} style={{ backgroundColor: "black" }}>
         <Toolbar>
 
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" className="p-3">
             Click Masters &nbsp; &nbsp; &nbsp;  <Typography variant="h5"> FOR PHOTOGRAPHERS</Typography>
           </Typography>
 
