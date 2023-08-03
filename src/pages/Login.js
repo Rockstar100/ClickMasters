@@ -5,9 +5,11 @@ import { message } from 'antd';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link'
 import { showLoading, hideLoading } from '../redux/featuers/alertSlice';
-import bg_img from './bg-Login.jpg';
+// import bg_img from './bg-Login.jpg';
+import bg_img from './camera-flip-forward.gif';
 
 function Login() {
+  console.log(bg_img);
   const dispatch = useDispatch();
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -41,7 +43,7 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-end items-center min-h-screen p-5 " style={{ backgroundImage: `url(${bg_img.src})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat',paddingRight:'100px' }}>
+    <div className="flex justify-end items-center min-h-screen p-5 " style={{ backgroundImage: `url(${bg_img.src})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat',paddingRight:'100px' }}>
       <div className="border-2 border-white p-8">
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-5 mr-5 bg-white" style={{width: "100%" , marginRight:'200px'}}>
           <div className="mb-4">

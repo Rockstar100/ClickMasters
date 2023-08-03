@@ -8,7 +8,8 @@ import Image from 'next/image';
 import img from './f2.jpg';
 import logo from './logo.png';
 // import bg_img from './bg-Login.jpg';
-import bg_img from './BG_Gif.gif';
+import bg_img from './camera-flip-forward.gif';
+
 
 function Form() {
     const [Name, setName] = useState('');

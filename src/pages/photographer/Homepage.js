@@ -1,67 +1,49 @@
-import React,{useEffect,useState} from 'react';
-import axios from 'axios';
-import PhotographerSideNav from './PhotographerSideNav';
-import Calender from './Calender';
-import PhotographerBooking from './PhotographerBooking';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import PhotographerSideNav from "./PhotographerSideNav";
+import Calender from "./Calender";
+import PhotographerBooking from "./PhotographerBooking";
 
 const Homepage = () => {
-    const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState();
 
+  const callAboutPage = async () => {
+    try {
+      const res = await axios.post(
+        "https://click-master.onrender.com/api/v1/cameraman/getData",
+        { token: localStorage.getItem("token") },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          credentials: "include",
+        }
+      );
 
-    
-    const callAboutPage = async () => {
- 
-        try {
-            const res = await axios.post('https://click-master.onrender.com/api/v1/cameraman/getData',
-            { token: localStorage.getItem('token') },
-             {
-                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem('token'),
-                },
-                credentials: 'include'
-            });
-            
-            if(res.data.success){
-          
-              setUserData(res.data.data)
-              console.log(userData)
-              
-          }
-          else{
-              localStorage.clear()
-              
-          }
-          
-      } 
-       catch (error) {
-          localStorage.clear()
-          console.log(error);
-  
+      if (res.data.success) {
+        setUserData(res.data.data);
+        console.log(userData);
+      } else {
+        localStorage.clear();
       }
-     
-    };
-   
-    
-  
+    } catch (error) {
+      localStorage.clear();
+      console.log(error);
+    }
+  };
 
-  
-  
-  
-    useEffect(() => {
-        
-            callAboutPage();
-        
-    }, [])
-    console.log(userData)
-
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+  console.log(userData);
 
   return (
-<><PhotographerSideNav/>
+    <div style={{backgroundColor:"white" }}>
+      <PhotographerSideNav />
 
+      <PhotographerBooking />
+    </div>
+  );
+};
 
-
-hello</>
-  )
-}
-
-export default Homepage
+export default Homepage;
