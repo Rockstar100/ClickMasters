@@ -48,7 +48,7 @@ console.log(notification);
             },
           }
         );
-        console.log("hogya");
+        console.log("hogya",res);
         if (res.data.success) {
           message.success(res.data.message);
           Bookings();

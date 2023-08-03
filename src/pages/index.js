@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
+import OurSpecialities from "./Specialisties/OurSpecialities";
+
 export default function Home() {
   const { loading } = useSelector((state) => state.alert);
 
@@ -28,6 +30,7 @@ export default function Home() {
       <ProtectedRoutes>
         <HomePage />
       </ProtectedRoutes>
+       {/* <OurSpecialities/> */}
 
       <Footer />
     </Wrapper>
