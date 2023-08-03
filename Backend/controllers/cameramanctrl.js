@@ -171,12 +171,16 @@ if (cameraman) {
 }
 
 const updatestatusController = async(req,res)=> {
+    console.log("ser",req);
+    console.log("hey oari");
     try{
 
         const{bookingId,status} = req.body
+        
         const bookings = await bookingModel.findByIdAndUpdate(bookingId,{status})
         const cameraman = await cameramanModel.findOne({_id: bookings.cameramanId});
         const user = await userModel.findOne({_id: bookings.userId});
+        console.log("user",user);
         user.notification.push({
             type: "status updated",
             message: `Your booking status is ${status}`,

@@ -8,7 +8,7 @@ const PhotographerTable = (props) => {
 
   const columns = Array.isArray(data)
     ? data.map((columns) => ({
-        id: columns._id,
+        _id: columns._id,
         name: columns.userInfo.name,
         imageUrl: columns.userInfo.profie_pic,
         Address: columns.Address,

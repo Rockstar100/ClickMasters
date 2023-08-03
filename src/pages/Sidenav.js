@@ -1,166 +1,160 @@
-import * as React from 'react';
-import tw from 'tailwind-styled-components'
-import { styled, useTheme } from '@mui/material/styles';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { Avatar, Grid } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import TimerIcon from '@mui/icons-material/Timer';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import InfoIcon from '@mui/icons-material/Info';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import GavelIcon from '@mui/icons-material/Gavel';
-import SecurityIcon from '@mui/icons-material/Security';
-import Button from '@mui/material/Button';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect,useState } from 'react'
+import * as React from "react";
+import tw from "tailwind-styled-components";
+import { styled, useTheme } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { Avatar, Grid } from "@mui/material";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import TimerIcon from "@mui/icons-material/Timer";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import InfoIcon from "@mui/icons-material/Info";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import GavelIcon from "@mui/icons-material/Gavel";
+import SecurityIcon from "@mui/icons-material/Security";
+import Button from "@mui/material/Button";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import {message} from 'antd';
-import { getUser } from '../redux/featuers/userSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { message } from "antd";
+import { getUser } from "../redux/featuers/userSlice";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
-   
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
     ...(open && {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
     }),
-  }),
+  })
 );
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+  transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-
-  display: 'flex',
-  alignItems: 'center',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }));
 
 export default function PersistentDrawerLeft() {
-
-
+  let flag = 1;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-
- 
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  // const isMenuOpen = Boolean(anchorEl);
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const marginbottom = {
-    marginBottom: '20px'
-}
+    marginBottom: "20px",
+  };
 
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const [user, setUser] = useState(null)
-const router = useRouter()
-const [userData, setUserData] = useState();
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+  const [userData, setUserData] = useState();
 
-const callAboutPage = async () => {
-
+  const callAboutPage = async () => {
     try {
-        const res = await axios.post('https://click-master.onrender.com/api/v1/users/getUserData',
-        { token: localStorage.getItem('token') },
-         {
-             headers: {
-                Authorization: "Bearer " + localStorage.getItem('token'),
-            },
-            // credentials: 'include'
-        });
-      
-        if(res.data.success){
-          setUserData(res.data.data)
-          dispatch(getUser(res.data.data))
+      const res = await axios.post(
+        "https://click-master.onrender.com/api/v1/users/getUserData",
+        { token: localStorage.getItem("token") },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          // credentials: 'include'
+        }
+      );
+
+      if (res.data.success) {
+        setUserData(res.data.data);
+        console.log("nav", userData);
+        dispatch(getUser(res.data.data));
       }
-      
-  } 
-   catch (error) {
-     
+    } catch (error) {
       console.log(error);
+    }
+  };
+  useEffect(() => {
+    callAboutPage();
+  }, []);
 
-  }
+  const notification = userData?.notification?.length;
  
-};
-useEffect(() => {
-   
-        callAboutPage();
-  
-}, [])
 
-
-const notification = userData?.notification?.length;
-
-const signOutHandler = () => {
-   localStorage.clear();
-   message.success('Logout Successfully');
-    router.push('/Login')
+  const signOutHandler = () => {
+    if (flag === 1) {
+      flag = 0;
+    } else {
+      flag++;
+    }
+    localStorage.clear();
+    message.success("Logout Successfully");
+    router.push("/Login");
 
     // signOut(auth)
     //     .then(() => {
@@ -170,85 +164,87 @@ const signOutHandler = () => {
     //     .catch((error) => {
     //         console.log(error.message)
     //     })
-}
-const menuId = 'primary-search-account-menu';
+  };
+  const menuId = "primary-search-account-menu";
 
-const renderMobileMenu = (
-  <Menu
-    anchorEl={mobileMoreAnchorEl}
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-  
-    keepMounted
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-   
-  
-  >
-   
-    <MenuItem>
-      <IconButton
-        size="large"
-        aria-label="show 17 new notifications"
-        color="inherit"
-      >
-        <Badge badgeContent={notification} color="error">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
-      <p>Notifications</p>
-    </MenuItem>
-    
-  </Menu>
-);
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+    >
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={notification} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+    </Menu>
+  );
+  console.log(flag);
 
   return (
-    <Box sx={{ display: 'flex' ,margin : "-3%"  }} disable >
+    <Box sx={{ display: "flex", margin: "-3%" }} disable>
       <CssBaseline />
-      <AppBar position="fixed" open={open} style={{backgroundColor:"black"}}>
+      <AppBar position="fixed" open={open} style={{ backgroundColor: "black" }}>
         <Toolbar>
-          <IconButton 
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-          Click Masters
+            Click Masters
           </Typography>
-          
-          <div style={{ marginLeft: 'auto' }}>
+
+          <div style={{ marginLeft: "auto" }}>
             <Link href="/notification">
-          <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={notification} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Button
+              onClick={() => signOutHandler()}
+              sx={{ borderColor: "white", color: "white", mr: 1, mx: 2 }}
+              variant="outlined"
             >
-              <Badge badgeContent={notification} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton></Link>
-                               <Button onClick={()=>signOutHandler()} sx={{ borderColor: 'white', color: 'white', mr: 1, mx: 2}} variant="outlined">Sign Out</Button>
-                             {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
-                             */}
-                        </div>
+              {flag == 0 ? <span>Sign In</span> : <span>Sign Out</span>}
+            </Button>
+            {/* <Button  sx={{ borderColor: 'white', color: 'white' }} variant="outlined">Sign Up</Button>
+             */}
+          </div>
         </Toolbar>
-        
       </AppBar>
       <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
         }}
         variant="persistent"
@@ -257,71 +253,78 @@ const renderMobileMenu = (
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-        <Grid align="center" style={marginbottom}><Avatar sx={{ width: 80, height: 80 }} src ={userData?.profie_pic}>
-          </Avatar> <br /> 
-          
-          <Typography>Hello {userData?.name} </Typography>
+          <Grid align="center" style={marginbottom}>
+            <Avatar
+              sx={{ width: 80, height: 80 }}
+              src={userData?.profie_pic}
+            ></Avatar>{" "}
+            <br />
+            <Typography>Hello {userData?.name} </Typography>
           </Grid>
           <Link href="/">
-            <ListItem  disablePadding>
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                < HomeIcon/>
+                  <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
-            </Link>
+          </Link>
 
-            <Link href="/MyProfile">
-            <ListItem  disablePadding>
+          <Link href="/MyProfile">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                <PersonIcon/>
+                  <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="My Profile" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/SecurityPrivacy">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/SecurityPrivacy">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                 <SecurityIcon/>
+                  <SecurityIcon />
                 </ListItemIcon>
                 <ListItemText primary="Security & Privacy" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/TermsCondition">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/TermsCondition">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                <GavelIcon/>
+                  <GavelIcon />
                 </ListItemIcon>
                 <ListItemText primary="Terms & Condition" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            <Link href="/Help">
-            <ListItem  disablePadding>
+          </Link>
+          <Link href="/Help">
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-               <InfoIcon/>
+                  <InfoIcon />
                 </ListItemIcon>
                 <ListItemText primary="Help" />
               </ListItemButton>
             </ListItem>
-            </Link>
+          </Link>
         </List>
         <Divider />
         <List>
-        <Link href="/notification">
+          <Link href="/notification">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -330,8 +333,8 @@ const renderMobileMenu = (
                 <ListItemText primary="All Notifications" />
               </ListItemButton>
             </ListItem>
-            </Link>
-            {/* <Link href="/CompletedOrder">
+          </Link>
+          {/* <Link href="/CompletedOrder">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -352,14 +355,10 @@ const renderMobileMenu = (
               </ListItemButton>
             </ListItem>
           </Link> */}
-               
-        
         </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-
-       
       </Main>
     </Box>
   );
