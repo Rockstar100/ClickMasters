@@ -172,7 +172,7 @@ export default function PersistentDrawerLeft() {
         horizontal: "right",
       }}
     >
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -183,7 +183,7 @@ export default function PersistentDrawerLeft() {
           </Badge>
         </IconButton>
         <p>Notifications</p>
-      </MenuItem>
+      </MenuItem> */}
     </Menu>
   );
 

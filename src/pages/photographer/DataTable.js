@@ -1,7 +1,68 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import {message} from 'antd';
+import axios from "axios";
+// import { Table } from 'react-bootstrap';
+import { useState , useEffect} from 'react';
 
 const DataTable = ({ data }) => {
+
+  const[bookings,setBookings]=useState([])
+  const Bookings = async () => {
+      try{
+          const res = await axios.get("https://click-master.onrender.com/api/v1/cameraman/cameraman-bookings", 
+          {
+              headers: {
+                  Authorization: "Bearer " + localStorage.getItem('token'),
+              },
+
+      })
+     
+      if(res.data.success){
+          setBookings(res.data.data)
+      }
+
+      }
+      catch(error){
+          console.log(error)
+      }
+  }
+  useEffect(() => {
+      Bookings()
+  }, [])
+  // console.log("booking status",bookings)
+  
+  const handleAccept = async (record, status) => {
+        
+    // console.log("hey",record.id , status)
+  
+    try{
+        const res = await axios.post("https://click-master.onrender.com/api/v1/cameraman/update-status", {
+    
+            bookingId:record._id,
+            status,
+      
+    }
+    , {
+        headers:{
+            Authorization: "Bearer " + localStorage.getItem('token'),
+
+        }
+    })
+    console.log("hogya",res)
+    if(res.data.success){
+        message.success(res.data.message)
+        Bookings()
+    }
+
+
+    }
+    catch(error){
+        console.log(error)
+        message.error("Something went wrong")
+    }
+}
+
+
   if (!data || data.length === 0) {
     return (
       <div
@@ -59,8 +120,8 @@ const DataTable = ({ data }) => {
                 <td>   <div>
                 {row.status === "pending" && (
                   <div>
-                         <button onClick={()=>handleAccept(record, 'approved')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px', marginRight:'5px' }}>Accept</button>
-                      <button onClick={()=>handleAccept(record, 'reject')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px' }}>Reject</button>
+                         <button onClick={()=>handleAccept(row, 'approved')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px', marginRight:'5px' }}>Accept</button>
+                      <button onClick={()=>handleAccept(row, 'reject')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px' }}>Reject</button>
 
                   </div>
                 ) }
