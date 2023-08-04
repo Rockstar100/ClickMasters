@@ -121,7 +121,7 @@ const DataTable = ({ data }) => {
                 {row.status === "pending" && (
                   <div>
                          <button onClick={()=>handleAccept(row, 'approved')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px', marginRight:'5px' }}>Accept</button>
-                      <button onClick={()=>handleAccept(row, 'reject')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px' }}>Reject</button>
+                      <button onClick={()=>handleAccept(row, 'rejected')} style={{ backgroundColor: '#000000', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '5px' }}>Reject</button>
 
                   </div>
                 ) }
