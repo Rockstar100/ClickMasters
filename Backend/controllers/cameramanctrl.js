@@ -186,7 +186,7 @@ const updatestatusController = async(req,res)=> {
             message: `Your booking status is ${status}`,
             data : {
                 bookingId: bookings._id,
-                status: bookings.status,
+                status: status,
                 cameramanId: bookings.cameramanId,
                 name: cameraman.name,
                 profie_pic: cameraman.profie_pic,
