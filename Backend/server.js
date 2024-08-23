@@ -12,7 +12,7 @@ dotenv.config();
 
 //connect to database
 
-const db = 'mongodb+srv://parveenjaiswal100:root123@clickmaster.oveswat.mongodb.net/Photographer'
+const db = ''
 const connectDB = async () => {
     try{
         await mongoose.connect(db,{
