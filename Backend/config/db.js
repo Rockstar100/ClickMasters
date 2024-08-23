@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 import dot from 'dotenv';
 const colors = require('colors');
 import {MongoMemoryServer} from 'mongodb-memory-server';
-const db = "mongodb+srv://parveenjaiswal100:root123@clickmaster.oveswat.mongodb.net/Photographer"
+const db = ""
 dot.config( {path: '../.env'});
 const connectDB = async () => {
     try{
