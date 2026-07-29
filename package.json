@@ -1,14 +1,13 @@
 {
-  "name": "my-app",
+  "name": "clickmasters-frontend",
   "version": "0.1.0",
+  "description": "Next.js frontend for ClickMasters, a cameraman booking platform",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "server": "nodemon server.js",
-    "lint": "next lint",
-    "proxy": "http://localhost:8080"
+    "lint": "next lint"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
