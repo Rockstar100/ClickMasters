@@ -4,7 +4,7 @@ const userModel = require("../models/userModels");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const colors = require('colors');
-const jwtt = "XYZ1234567"
+const jwtt = process.env.JWT_SECRET
 const moment = require('moment');
 const loginController = async(req,res)=> {
     try{

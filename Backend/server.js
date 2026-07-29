@@ -12,12 +12,12 @@ dotenv.config();
 
 //connect to database
 
-const db = ''
+const db = process.env.MONGO_URL || ''
 const connectDB = async () => {
     try{
         await mongoose.connect(db,{
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            
+            
         })
 
 

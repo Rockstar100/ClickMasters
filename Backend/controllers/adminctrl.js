@@ -4,7 +4,7 @@ const userModel = require('../models/userModels')
 const getAllUsersController = async(req,res) =>{
 
     try{
-        const users = await userModel.find({})
+        const users = await userModel.find({}).select('-password')
         res.status(200).send ({
             sucess:true,
             message: 'user data',
