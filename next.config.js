@@ -4,10 +4,7 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'],
   },
-  experimental:{
-    appDir: true,
-  },
- 
+  transpilePackages: ['mdb-react-ui-kit'],
 };
 
 module.exports = nextConfig
