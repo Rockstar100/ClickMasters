@@ -5,7 +5,7 @@ const cardModel = require('../models/cardModel')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const colors = require('colors');
-const jwtt = "XYZ1234567"
+const jwtt = process.env.JWT_SECRET
 const moment = require('moment');
 const registerController = async(req,res)=> {
     try{
@@ -212,21 +212,24 @@ const getAllNotificationController = async(req,res)=> {
 
 const updateController = async(req,res)=> {
     try{
-        const user = userModel.findOne({_id: req.body.userId});
+        const user = await userModel.findOne({_id: req.body.userId});
 
         if(!user){
             return res.status(200).send({success: false, message: 'User does not exist'});
         }
         else{
 
-            const body = req.body
-            //update
-            userModel.updateOne(req.body.userId,body,{new:true},(err,doc)=>{
+            // Only allow updating safe, non-privileged fields - never isAdmin,
+            // isCameraman, password, or _id through this endpoint.
+            const { name, bio, location, address, phone, profie_pic } = req.body;
+            const update = { name, bio, location, address, phone, profie_pic };
+
+            userModel.updateOne({ _id: req.body.userId }, update, {new:true},(err,doc)=>{
                 if(err){
                     console.log(err)
                     res.status(500).send({
                         success : false,
-                      
+
                         message : "Error while updating user",
                         })
                 }
@@ -240,7 +243,7 @@ const updateController = async(req,res)=> {
 
             })
         }
-        
+
 
     }
     catch(error){

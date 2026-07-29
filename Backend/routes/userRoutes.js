@@ -25,7 +25,7 @@ router.post('/apply-cameraman', applyCameraman)
 
 router.post('/get-all-notification',authMiddleware,getAllNotificationController)
 
-router.put("/update",updateController ) 
+router.put("/update", authMiddleware, updateController )
 
 //get all cameraman
 router.get('/getAllCameraman', authMiddleware, getAllCameramanController )
