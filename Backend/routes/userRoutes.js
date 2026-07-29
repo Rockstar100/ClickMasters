@@ -8,7 +8,6 @@ const userModel = require('../models/userModels');
 const { loginController, registerController, authController,applyCameraman,getAllNotificationController,updateController,getAllCameramanController,bookCameramanController, bookingavilabilityController,userBookingsController,cardData} = require('../controllers/userCtrl');
 const authMiddleware = require('../middlewares/authMiddleware');
 const { getAllCameraman } = require('../controllers/adminctrl');
-const { use } = require('react');
 
 
 const router = express.Router();
